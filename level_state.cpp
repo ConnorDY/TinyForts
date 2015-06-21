@@ -10,6 +10,9 @@ Level_State::Level_State(StateManager &sM, SoundManager &som, TextureManager con
 	bg.setTexture(textureManager.getRef("map_02_bg"));
 	fg.setTexture(textureManager.getRef("map_02_fg"));
 
+	cursor.setTexture(textureManager.getRef("cursor"));
+	cursor.setOrigin(10, 10);
+
 	rect.setSize(sf::Vector2f(VIEW_WIDTH, BAR_HEIGHT));
 	rect.setFillColor(sf::Color::Black);
 
@@ -79,6 +82,8 @@ void Level_State::drawForeground(sf::RenderWindow &window)
 {
 	window.draw(fg);
 	window.draw(rect);
+	cursor.setPosition(mouse.x, mouse.y);
+	window.draw(cursor);
 }
 
 void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, InputHandler &inputHandler)
@@ -108,9 +113,9 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 			player->jump(); // Jumping
 	}
 
-	sf::Vector2i m = sf::Mouse::getPosition(window);
+	mouse = sf::Mouse::getPosition(window);
 
-	player->move(moveH, m);
+	player->move(moveH, mouse);
 
 	Room::update(window, soundManager, inputHandler);
 }

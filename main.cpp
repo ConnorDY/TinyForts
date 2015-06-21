@@ -23,6 +23,7 @@ void loadRes(TextureManager &textureManager, SoundManager &soundManager)
 	auto textures = std::vector<std::tuple<std::string, unsigned char const*, size_t>>
 	{
 		std::tuple<std::string, unsigned char const*, size_t>("player", ARRAY_WITH_LENGTH(res_player_png)),
+		std::tuple<std::string, unsigned char const*, size_t>("cursor", ARRAY_WITH_LENGTH(res_cursor_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_01_bg", ARRAY_WITH_LENGTH(res_maps_01_bg_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_01_fg", ARRAY_WITH_LENGTH(res_maps_01_fg_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_02_bg", ARRAY_WITH_LENGTH(res_maps_02_bg_png)),
@@ -40,6 +41,7 @@ void loadRes(TextureManager &textureManager, SoundManager &soundManager)
 	auto textures = std::vector<std::pair<std::string, std::string>>
 	{
 		{ "player", "res/player.png" },
+		{ "cursor", "res/cursor.png" },
 		{ "map_01_bg", "res/maps/01/bg.png"},
 		{ "map_01_fg", "res/maps/01/fg.png"},
 		{ "map_02_bg", "res/maps/02/bg.png"},
@@ -78,6 +80,7 @@ int main()
 	// Create Window
 	sf::RenderWindow window(sf::VideoMode(ROOM_WIDTH, ROOM_HEIGHT), "Matt is a fag.", sf::Style::Close | sf::Style::Titlebar);
 	window.setVerticalSyncEnabled(VSYNC_ON);
+	window.setMouseCursorVisible(false);
 
 	// Game Loop
 	while (window.isOpen())

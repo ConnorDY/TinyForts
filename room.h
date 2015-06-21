@@ -39,9 +39,9 @@ class Room : public State
 		void reset();
 
 		virtual void updateView(sf::RenderWindow &window);
-		virtual void drawBackground(sf::RenderWindow &window);
+		virtual void drawBackground(sf::RenderWindow &window) = 0;
 		virtual void drawSprites(sf::RenderWindow &window);
-		virtual void drawForeground(sf::RenderWindow &window);
+		virtual void drawForeground(sf::RenderWindow &window) = 0;
 		virtual void draw(sf::RenderWindow &window) override;
 		virtual void update(sf::RenderWindow &window, SoundManager &soundManager, InputHandler &inputHandler) override;
 };

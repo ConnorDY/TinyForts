@@ -12,9 +12,10 @@ class Player;
 class Level_State : public Room
 {
 	protected:
-		sf::Sprite bg, fg;
+		sf::Sprite bg, fg, cursor;
 		sf::RectangleShape rect;
 		Player *player;
+		sf::Vector2i mouse;
 	public:
 		Level_State(StateManager &sM, SoundManager &som, TextureManager const &textureManager, settings_t &settings);
 		virtual ~Level_State();

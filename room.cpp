@@ -103,11 +103,8 @@ void Room::updateView(sf::RenderWindow &window)
 
 bool Room::shouldDraw(Object const *obj) const
 {
-	return true;
-}
-
-void Room::drawBackground(sf::RenderWindow &window)
-{
+	if (obj != nullptr) return true;
+	else return false;
 }
 
 void Room::drawSprites(sf::RenderWindow &window)
@@ -115,10 +112,6 @@ void Room::drawSprites(sf::RenderWindow &window)
 	for (auto object : objects)
 		if (shouldDraw(object))
 			object->draw(window);
-}
-
-void Room::drawForeground(sf::RenderWindow &window)
-{
 }
 
 void Room::draw(sf::RenderWindow &window)

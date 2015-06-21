@@ -53,7 +53,7 @@ void Menu_State::draw(sf::RenderWindow &window)
 
 void Menu_State::update(sf::RenderWindow &window, SoundManager &soundManager, InputHandler &inputHandler)
 {
-	sf::Time deltaTime = restartClock();
+	/*sf::Time deltaTime = */restartClock();
 
 	// Get Input
 	sf::Event event;
