@@ -36,6 +36,6 @@ tools/make_res
 static_resource.*
 
 # Directories
-Debug/
-Release/
-Demo/
+TinyForts/Debug
+TinyForts/Release
+TinyForts/res

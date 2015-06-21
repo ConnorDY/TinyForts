@@ -1,9 +1,8 @@
 #include "player.h"
 #include "room.h"
 
-#include <math.h>
-
 #define _USE_MATH_DEFINES
+#include <math.h>
 
 #define ARM_X 2
 #define ARM_Y 15
