@@ -1,0 +1,3 @@
+#!/bin/bash
+# To be run from the Platformer directory
+exec comm -13 <(grep res/ main.cpp | grep -v '//' | cut -d\" -f4 | sort -u) <(find res -type f | sort)
