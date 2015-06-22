@@ -8,7 +8,6 @@ class Client
 	private:
 		sf::UdpSocket udpSocket;
 		sf::TcpSocket tcpSocket;
-		sf::Socket::Status status;
 	public:
 		Client();
 

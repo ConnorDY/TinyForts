@@ -3,14 +3,16 @@
 
 Client::Client()
 {
-	if (udpSocket.bind(5050) != sf::Socket::Done) printf("Could not bind server UDP socket to port 5060.\n");
-
-	status = tcpSocket.connect("192.168.1.87", 5060);
 	tcpSocket.setBlocking(false);
 	udpSocket.setBlocking(false);
+
+	if (udpSocket.bind(5050) != sf::Socket::Done) printf("Could not bind server UDP socket to port 5050.\n");
 }
 
 void Client::update()
 {
-	if (status != sf::Socket::Done) printf("Could not connect to server.\n");
+	sf::Socket::Status status = tcpSocket.connect("192.168.1.87", 5060);
+
+	if (status != sf::Socket::Done) printf("Failed to connect to server. Retrying...\n");
+	else printf("Connected to server!\n");
 }
