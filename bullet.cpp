@@ -31,11 +31,13 @@ void Bullet::draw(sf::RenderWindow &window)
 
 void Bullet::update(sf::Time deltaTime)
 {
-	// Gravity
-	applyGravityOnce(deltaTime);
-	if (dy == 0) kill();
-
 	double mstime = deltaTime.asMicroseconds() / 1000.0f;
+
+	// Should these be moved to Object?
+
+	// Gravity
+	dy += gravity * mstime;
+	if (dy > maxFallSpeed) dy = maxFallSpeed;
 
 	// Update position
 	if (placeFree(x + (dx * mstime), y + (dy * mstime)))
