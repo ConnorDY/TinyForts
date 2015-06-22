@@ -23,6 +23,8 @@ Object::~Object()
 int Object::getDepth() const { return depth; }
 bool Object::isSolid() const { return solid; }
 bool Object::shouldDelete() const { return del; }
+double Object::getX() const { return x; }
+double Object::getY() const { return y; }
 
 sf::FloatRect Object::getRect() const
 {

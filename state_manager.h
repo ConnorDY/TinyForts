@@ -26,6 +26,8 @@ class StateManager
 		settings_t &settings;
 		std::unique_ptr<State> currentState;
 		bool stateChanged;
+
+		void resetNetworking();
 	public:
 		StateManager(TextureManager const &tM, SoundManager &sM, settings_t &settings);
 		~StateManager();

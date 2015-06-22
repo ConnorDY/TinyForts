@@ -24,6 +24,8 @@ class Object
 		int getDepth() const;
 		bool isSolid() const;
 		bool shouldDelete() const;
+		double getX() const;
+		double getY() const;
 		virtual bool canLoopAround() const;
 		virtual bool canCollideWith(const Object* obj) const;
 

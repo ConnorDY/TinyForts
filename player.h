@@ -15,6 +15,9 @@ class Player : public Object
 	public:
 		Player(Room &room, double x, double y);
 
+		// Accessors
+		double getAngle() const;
+
 		// Actions
 		void move(int dir, sf::Vector2i m);
 		void jump();

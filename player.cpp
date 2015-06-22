@@ -47,6 +47,12 @@ Player::Player(Room &room, double x, double y)
 	setDepth(-1);
 }
 
+
+/* Accessors */
+double Player::getAngle() const { return angle; }
+
+
+/* Actions */
 void Player::move(int dir, sf::Vector2i m)
 {
 	if (m.x < x + (width / 2)) scale = -1;

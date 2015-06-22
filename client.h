@@ -12,7 +12,7 @@ class Client
 	public:
 		Client();
 
-		void update();
+		void update(double x, double y, double angle);
 };
 
 #endif

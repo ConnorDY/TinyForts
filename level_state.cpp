@@ -3,6 +3,8 @@
 #include "block.h"
 #include "globals.h"
 #include "menu_state.h"
+#include "server.h"
+#include "client.h"
 
 Level_State::Level_State(StateManager &sM, SoundManager &som, TextureManager const &textureManager, settings_t &settings)
 	: Room(sM, som, textureManager, settings)
@@ -126,4 +128,11 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 	player->move(moveH, mouse);
 
 	Room::update(window, soundManager, inputHandler);
+
+	// Networking
+	Server *server = getStateManager().getServer();
+	Client *client = getStateManager().getClient();
+
+	if (server != nullptr) server->update();
+	if (client != nullptr) client->update(player->getX(), player->getY(), player->getAngle());
 }

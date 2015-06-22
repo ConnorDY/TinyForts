@@ -34,13 +34,16 @@ void Server::update()
 	}
 
 	// Current client connections
+	sf::Packet packet;
 	sf::IpAddress sender;
-	std::size_t received;
 	unsigned short port;
-	char data[100];
 
-	if (socket.receive(data, 100, received, sender, port) == sf::Socket::Done)
+	if (socket.receive(packet, sender, port) == sf::Socket::Done)
 	{
-		std::cout << "Received " << received << " bytes from " << sender << " on port " << port << std::endl;
+		std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+
+		double x, y, angle;
+
+		if (packet >> x >> y >> angle) std::cout << "X: " << x << " | Y: " << y << " | Angle: " << angle << std::endl;
 	}
 }

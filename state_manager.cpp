@@ -38,9 +38,6 @@ void StateManager::update(sf::RenderWindow &window)
 		stateChanged = false;
 		currentState->update(window, soundManager, inputHandler);
 	} while (stateChanged);
-
-	if (server != nullptr) server->update();
-	if (client != nullptr) client->update();
 }
 
 void StateManager::setState(std::unique_ptr<State> state)
@@ -49,16 +46,22 @@ void StateManager::setState(std::unique_ptr<State> state)
 	stateChanged = true;
 }
 
+void StateManager::resetNetworking()
+{
+	delete server;
+	delete client;
+	server = nullptr;
+	client = nullptr;
+}
+
 void StateManager::createServer()
 {
-	delete client;
-	client = nullptr;
+	resetNetworking();
 	server = new Server();
 }
 
 void StateManager::createClient()
 {
-	delete server;
-	server = nullptr;
+	resetNetworking();
 	client = new Client();
 }
