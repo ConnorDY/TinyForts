@@ -1,4 +1,5 @@
 #include "server.h"
+#include "globals.h"
 #include <stdio.h>
 
 Server::Server()
@@ -6,9 +7,9 @@ Server::Server()
 	listener.setBlocking(false);
 	socket.setBlocking(false);
 	client.setBlocking(false);
-	
-	if (listener.listen(5060) != sf::Socket::Done) printf("Could not bind TCPListener to port 5060.\n");
-	if (socket.bind(5050) != sf::Socket::Done) printf("Could not bind server UDP socket to port 5050.\n");
+
+	if (listener.listen(TCP_PORT) != sf::Socket::Done) printf("Could not bind TCPListener to port %d.\n", TCP_PORT);
+	if (socket.bind(UDP_PORT) != sf::Socket::Done) printf("Could not bind server UDP socket to port %d.\n", UDP_PORT);
 }
 
 void Server::update()

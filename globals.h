@@ -11,6 +11,10 @@
 
 #define BAR_HEIGHT 88
 
+#define UDP_PORT 5050
+#define TCP_PORT 5060
+#define SERVER "192.168.1.87"
+
 //#define _DEBUG
 
 #ifdef _DEBUG
