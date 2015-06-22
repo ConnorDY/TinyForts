@@ -77,11 +77,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\SFML-2.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-audio-s.lib;sfml-window-s.lib;sfml-system-s.lib;opengl32.lib;openal32.lib;freetype.lib;jpeg.lib;flac.lib;ogg.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-audio-s.lib;sfml-network-s.lib;sfml-window-s.lib;sfml-system-s.lib;ws2_32.lib;opengl32.lib;openal32.lib;freetype.lib;jpeg.lib;flac.lib;ogg.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\block.cpp" />
+    <ClCompile Include="..\bullet.cpp" />
+    <ClCompile Include="..\client.cpp" />
     <ClCompile Include="..\input_handler.cpp" />
     <ClCompile Include="..\level_state.cpp" />
     <ClCompile Include="..\main.cpp" />
@@ -89,6 +91,7 @@
     <ClCompile Include="..\object.cpp" />
     <ClCompile Include="..\player.cpp" />
     <ClCompile Include="..\room.cpp" />
+    <ClCompile Include="..\server.cpp" />
     <ClCompile Include="..\sound_manager.cpp" />
     <ClCompile Include="..\state.cpp" />
     <ClCompile Include="..\state_manager.cpp" />
@@ -96,6 +99,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\block.h" />
+    <ClInclude Include="..\bullet.h" />
+    <ClInclude Include="..\client.h" />
     <ClInclude Include="..\globals.h" />
     <ClInclude Include="..\input_handler.h" />
     <ClInclude Include="..\level_state.h" />
@@ -103,6 +108,7 @@
     <ClInclude Include="..\object.h" />
     <ClInclude Include="..\player.h" />
     <ClInclude Include="..\room.h" />
+    <ClInclude Include="..\server.h" />
     <ClInclude Include="..\settings.h" />
     <ClInclude Include="..\sound_manager.h" />
     <ClInclude Include="..\state.h" />
