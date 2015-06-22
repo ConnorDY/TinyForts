@@ -7,8 +7,10 @@ class Server
 {
 	private:
 		sf::UdpSocket socket;
-		sf::TcpSocket client;
 		sf::TcpListener listener;
+		std::vector<sf::TcpSocket*> clients;
+		sf::SocketSelector selector;
+		int clientNum;
 	public:
 		Server();
 
