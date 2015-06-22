@@ -15,6 +15,7 @@ class Level_State : public Room
 		sf::Sprite bg, fg, cursor;
 		sf::RectangleShape rect;
 		Player *player;
+		std::vector<network_player> otherPlayers;
 		sf::Vector2i mouse;
 	public:
 		Level_State(StateManager &sM, SoundManager &som, TextureManager const &textureManager, settings_t &settings);

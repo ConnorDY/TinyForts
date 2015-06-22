@@ -27,6 +27,7 @@ class Player : public Object
 		void updateAnimation(sf::Time deltaTime);
 		virtual void loopAroundMap() override;
 		virtual void draw(sf::RenderWindow &window) override;
+		virtual void drawOther(sf::RenderWindow &window, double x, double y, double angle, int frame);
 		virtual void update(sf::Time deltaTime) override;
 		virtual void onDeath() override;
 };

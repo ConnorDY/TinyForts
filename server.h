@@ -14,6 +14,10 @@ class Server
 	public:
 		Server();
 
+		// Accessors
+		std::vector<network_player> getOtherPlayers() const;
+
+		// Actions
 		void update();
 };
 

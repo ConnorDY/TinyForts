@@ -83,6 +83,11 @@ Player* Level_State::getPlayer() const
 void Level_State::drawBackground(sf::RenderWindow &window)
 {
 	window.draw(bg);
+
+	for (network_player p : otherPlayers)
+	{
+		player->drawOther(window, p.x, p.y, p.angle, p.frame);
+	}
 }
 
 void Level_State::drawForeground(sf::RenderWindow &window)
@@ -133,14 +138,19 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 	Server *server = getStateManager().getServer();
 	Client *client = getStateManager().getClient();
 
-	if (server != nullptr) server->update();
+	if (server != nullptr)
+	{
+		server->update();
+		otherPlayers = server->getOtherPlayers();
+	}
+
 	if (client != nullptr)
 	{
 		network_player p;
 		p.x = player->getX();
 		p.y = player->getY();
 		p.angle = player->getAngle();
-		p.frame = player->getFrame();
+		p.frame = floor(player->getFrame());
 
 		client->update(p);
 	}

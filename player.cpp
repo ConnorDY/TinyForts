@@ -37,7 +37,7 @@ Player::Player(Room &room, double x, double y)
 			0, 0, false,
 			0.0014, 0.4
 	  ),
-	animation(&ANIM.WALKING), frame(0), scale(1), angle(0),
+	animation(&ANIM.STILL), frame(0), scale(1), angle(0),
 	moveSpeed(0.17), jumpSpeed(0.51)
 {
 	spr.setTexture(room.textureManager.getRef("player"));
@@ -158,6 +158,62 @@ void Player::draw(sf::RenderWindow &window)
 
 		// Body
 		spr.setTextureRect((*animation)[(int)frame]);
+		spr.setOrigin(origin);
+		spr.setScale(sf::Vector2f(scale, 1));
+		spr.setRotation(0);
+		spr.setPosition(xx + (width / 2), ceil(yy) + height);
+		window.draw(spr);
+	}
+}
+
+void Player::drawOther(sf::RenderWindow &window, double x_, double y_, double angle_, int frame_)
+{
+	for (unsigned int i = 0; i < 9; i++)
+	{
+		double xx = x_, yy = y_;
+
+		switch (i)
+		{
+			case 1:
+				xx += VIEW_WIDTH;
+				break;
+			case 2:
+				yy += VIEW_HEIGHT - BAR_HEIGHT;
+				break;
+			case 3:
+				xx += VIEW_WIDTH;
+				yy += VIEW_HEIGHT - BAR_HEIGHT;
+				break;
+			case 4:
+				xx -= VIEW_WIDTH;
+				break;
+			case 5:
+				yy -= VIEW_HEIGHT - BAR_HEIGHT;
+				break;
+			case 6:
+				xx -= VIEW_WIDTH;
+				yy -= VIEW_HEIGHT - BAR_HEIGHT;
+				break;
+			case 7:
+				xx += VIEW_WIDTH;
+				yy -= VIEW_HEIGHT - BAR_HEIGHT;
+				break;
+			case 8:
+				xx -= VIEW_WIDTH;
+				yy += VIEW_HEIGHT - BAR_HEIGHT;
+				break;
+		}
+
+		//Arm
+		spr.setTextureRect(sf::IntRect(110, 14, 10, 6));
+		spr.setOrigin(0, 3);
+		spr.setScale(1, 1);
+		spr.setRotation(angle_ + 180);
+		spr.setPosition(xx + (width / 2) + (scale * ARM_X), ceil(yy) + ARM_Y);
+		window.draw(spr);
+
+		// Body
+		spr.setTextureRect(ANIM.WALKING[frame_]);
 		spr.setOrigin(origin);
 		spr.setScale(sf::Vector2f(scale, 1));
 		spr.setRotation(0);
