@@ -63,7 +63,7 @@ void Player::jump()
 
 void Player::shoot()
 {
-	room.spawn(new Bullet(room, x + (scale * ARM_X), y + ARM_Y, .25, angle + 180.0));
+	room.spawn(new Bullet(room, x + (scale * ARM_X), y + ARM_Y, .3, angle + 180.0));
 }
 
 void Player::setAnimation(std::vector<sf::IntRect> const &newAnim)

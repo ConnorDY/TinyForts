@@ -9,7 +9,7 @@ Bullet::Bullet(Room &room, double x, double y, double s, double a)
 	: Object(
 			room, x, y, 6, 6,
 			0, 0, false,
-			0.00007, 0.1
+			0.00008, 0.15
 	  ),
 	speed(s), angle(a)
 {
@@ -31,17 +31,29 @@ void Bullet::draw(sf::RenderWindow &window)
 
 void Bullet::update(sf::Time deltaTime)
 {
-	std::vector<Object*> col = allCollisions(x + dx, y + dy);
-	for (Object *obj : col)
+	// Gravity
+	applyGravityOnce(deltaTime);
+	if (dy == 0) kill();
+
+	double mstime = deltaTime.asMicroseconds() / 1000.0f;
+
+	// Update Y
+	if (placeFree(x, y + (dx * mstime))) y += dy * mstime;
+	else
 	{
-		if (dynamic_cast<Block*>(obj) != nullptr)
-		{
-			kill();
-			return;
-		}
+		kill();
+		return;
 	}
 
-	Object::update(deltaTime);
+	// Update X
+	if (placeFree(x + (dx * mstime), y)) x += dx * mstime;
+	else
+	{
+		kill();
+		return;
+	}
+
+	loopAroundMap();
 }
 
 void Bullet::onDeath()
