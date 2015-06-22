@@ -10,6 +10,7 @@
 #include "input_handler.h"
 #include "texture_manager.h"
 #include "sound_manager.h"
+#include "server.h"
 
 class State;
 
@@ -19,12 +20,16 @@ class StateManager
 		TextureManager const &textureManager;
 		SoundManager &soundManager;
 		InputHandler inputHandler;
+		Server *server;
 		settings_t &settings;
 		std::unique_ptr<State> currentState;
 		bool stateChanged;
 	public:
 		StateManager(TextureManager const &tM, SoundManager &sM, settings_t &settings);
 		~StateManager();
+
+		// Accessors
+		Server* getServer();
 
 		// Actions
 		void draw(sf::RenderWindow &window);

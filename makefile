@@ -6,7 +6,7 @@ STATIC_RESOURCES_FAST=false
 CC=gcc
 CXX=g++
 
-LIBS=-lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
+LIBS=-lsfml-graphics -lsfml-network -lsfml-audio -lsfml-window -lsfml-system
 
 LDFLAGS=-Wall -Wextra -pedantic -fwhole-program -s
 CPPFLAGS=-Wall -Wextra -pedantic -Wno-reorder -I.
