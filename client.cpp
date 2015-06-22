@@ -14,7 +14,7 @@ void Client::update()
 {
 	if (!connected)
 	{
-		sf::Socket::Status status = tcpSocket.connect("192.168.1.87", TCP_PORT);
+		sf::Socket::Status status = tcpSocket.connect(SERVER, TCP_PORT);
 
 		if (status != sf::Socket::Done) printf("Failed to connect to server. Retrying...\n");
 		else
@@ -25,6 +25,6 @@ void Client::update()
 	}
 	else
 	{
-
+		udpSocket.send(0, 100, SERVER, UDP_PORT);
 	}
 }
