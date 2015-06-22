@@ -113,6 +113,9 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 
 		if (inputHandler.checkInput(InputHandler::Input::Up, event))
 			player->jump(); // Jumping
+
+		if (inputHandler.checkInput(InputHandler::Input::PressL, event))
+			player->shoot();
 	}
 
 	mouse = sf::Mouse::getPosition(window);

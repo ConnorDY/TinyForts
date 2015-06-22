@@ -18,6 +18,7 @@ class Player : public Object
 		// Actions
 		void move(int dir, sf::Vector2i m);
 		void jump();
+		void shoot();
 		void setAnimation(std::vector<sf::IntRect> const &newAnim);
 		void updateAnimation(sf::Time deltaTime);
 		virtual void loopAroundMap() override;

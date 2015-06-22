@@ -43,6 +43,34 @@ InputHandler::InputHandler()
 	key->eventType = sf::Event::KeyPressed;
 	key->keyCode = sf::Keyboard::Escape;
 	Inputs[Input::Exit] = key;
+
+	// Left Pressed
+	key = new InputKeys();
+	key->inputType = MouseInput;
+	key->eventType = sf::Event::MouseButtonPressed;
+	key->mouseButton = sf::Mouse::Left;
+	Inputs[Input::PressL] = key;
+
+	// Left Released
+	key = new InputKeys();
+	key->inputType = MouseInput;
+	key->eventType = sf::Event::MouseButtonReleased;
+	key->mouseButton = sf::Mouse::Left;
+	Inputs[Input::ReleaseL] = key;
+
+	// Right Pressed
+	key = new InputKeys();
+	key->inputType = MouseInput;
+	key->eventType = sf::Event::MouseButtonPressed;
+	key->mouseButton = sf::Mouse::Right;
+	Inputs[Input::PressR] = key;
+
+	// Right Pressed
+	key = new InputKeys();
+	key->inputType = MouseInput;
+	key->eventType = sf::Event::MouseButtonReleased;
+	key->mouseButton = sf::Mouse::Right;
+	Inputs[Input::ReleaseR] = key;
 }
 
 

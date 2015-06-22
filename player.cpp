@@ -1,5 +1,6 @@
 #include "player.h"
 #include "room.h"
+#include "bullet.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -42,6 +43,8 @@ Player::Player(Room &room, double x, double y)
 	spr.setTexture(room.textureManager.getRef("player"));
 	spr.setColor(sf::Color(255, 0, 0));
 	origin = sf::Vector2f(13, 29);
+
+	setDepth(-1);
 }
 
 void Player::move(int dir, sf::Vector2i m)
@@ -50,12 +53,17 @@ void Player::move(int dir, sf::Vector2i m)
 	else scale = 1;
 
 	dx = dir * moveSpeed;
-	angle = atan2(ARM_Y + y - m.y, (scale * ARM_X) + x - m.x) * 180 / M_PI;
+	angle = atan2(ARM_Y + y - m.y, (scale * ARM_X) + x - m.x) * 180.0 / M_PI;
 }
 
 void Player::jump()
 {
 	if (dy == 0) dy = -jumpSpeed;
+}
+
+void Player::shoot()
+{
+	room.spawn(new Bullet(room, x + (scale * ARM_X), y + ARM_Y, .25, angle + 180.0));
 }
 
 void Player::setAnimation(std::vector<sf::IntRect> const &newAnim)

@@ -24,6 +24,7 @@ void loadRes(TextureManager &textureManager, SoundManager &soundManager)
 	{
 		std::tuple<std::string, unsigned char const*, size_t>("player", ARRAY_WITH_LENGTH(res_player_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("cursor", ARRAY_WITH_LENGTH(res_cursor_png)),
+		std::tuple<std::string, unsigned char const*, size_t>("bullet", ARRAY_WITH_LENGTH(res_bullet_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_01_bg", ARRAY_WITH_LENGTH(res_maps_01_bg_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_01_fg", ARRAY_WITH_LENGTH(res_maps_01_fg_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_02_bg", ARRAY_WITH_LENGTH(res_maps_02_bg_png)),
@@ -42,6 +43,7 @@ void loadRes(TextureManager &textureManager, SoundManager &soundManager)
 	{
 		{ "player", "res/player.png" },
 		{ "cursor", "res/cursor.png" },
+		{ "bullet", "res/bullet.png" },
 		{ "map_01_bg", "res/maps/01/bg.png"},
 		{ "map_01_fg", "res/maps/01/fg.png"},
 		{ "map_02_bg", "res/maps/02/bg.png"},

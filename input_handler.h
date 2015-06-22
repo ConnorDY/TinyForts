@@ -11,7 +11,8 @@ class InputHandler
 		enum Input
 		{
 			Left, Right, Up, Down,
-			Start, Exit
+			Start, Exit,
+			PressL, ReleaseL, PressR, ReleaseR
 		};
 
 		InputHandler();
@@ -34,7 +35,7 @@ class InputHandler
 			sf::Mouse::Button mouseButton;
 		};
 
-		InputKeys *Inputs[8];
+		InputKeys *Inputs[10];
 };
 
 #endif
