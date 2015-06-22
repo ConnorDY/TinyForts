@@ -11,6 +11,7 @@
 #include "texture_manager.h"
 #include "sound_manager.h"
 #include "server.h"
+#include "client.h"
 
 class State;
 
@@ -21,6 +22,7 @@ class StateManager
 		SoundManager &soundManager;
 		InputHandler inputHandler;
 		Server *server;
+		Client *client;
 		settings_t &settings;
 		std::unique_ptr<State> currentState;
 		bool stateChanged;
@@ -30,11 +32,14 @@ class StateManager
 
 		// Accessors
 		Server* getServer();
+		Client* getClient();
 
 		// Actions
 		void draw(sf::RenderWindow &window);
 		void update(sf::RenderWindow &window);
 		void setState(std::unique_ptr<State> state);
+		void createServer();
+		void createClient();
 };
 
 #endif

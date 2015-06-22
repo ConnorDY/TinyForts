@@ -11,7 +11,8 @@ Menu_State::Menu_State(StateManager &sM, TextureManager const &textureManager, s
 	const_cast<sf::Texture&>(fnt.getTexture(11)).setSmooth(false);
 
 	// Menu Options
-	menuOptions.push_back("Start");
+	menuOptions.push_back("Host");
+	menuOptions.push_back("Connect");
 	menuOptions.push_back("Exit");
 }
 
@@ -100,8 +101,15 @@ void Menu_State::update(sf::RenderWindow &window, SoundManager &soundManager, In
 					std::exit(0);
 					return;
 
-				// Load Level State
+				// Host
 				case 0:
+					settings.host = true;
+					getStateManager().setState(std::make_unique<Level_State>(getStateManager(), soundManager, textureManager, settings));
+					return;
+
+				// Connect
+				case 1:
+					settings.host = false;
 					getStateManager().setState(std::make_unique<Level_State>(getStateManager(), soundManager, textureManager, settings));
 					return;
 			}

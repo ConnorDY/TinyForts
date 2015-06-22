@@ -70,6 +70,7 @@ int main()
 	settings.vsync_on = true;
 	settings.music_on = true;
 	settings.sound_on = true;
+	settings.host = false;
 
 	// Load Textures and Sounds and Shaders
 	TextureManager textureManager;

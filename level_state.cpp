@@ -16,6 +16,9 @@ Level_State::Level_State(StateManager &sM, SoundManager &som, TextureManager con
 	rect.setSize(sf::Vector2f(VIEW_WIDTH, BAR_HEIGHT));
 	rect.setFillColor(sf::Color::Black);
 
+	if (settings.host) sM.createServer();
+	else sM.createClient();
+
 	start();
 }
 
