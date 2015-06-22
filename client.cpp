@@ -1,7 +1,7 @@
 #include "client.h"
 #include <stdio.h>
 
-Client::Client()
+Client::Client() : connected(false)
 {
 	tcpSocket.setBlocking(false);
 	udpSocket.setBlocking(false);
@@ -11,8 +11,19 @@ Client::Client()
 
 void Client::update()
 {
-	sf::Socket::Status status = tcpSocket.connect("192.168.1.87", 5060);
+	if (!connected)
+	{
+		sf::Socket::Status status = tcpSocket.connect("192.168.1.87", 5060);
 
-	if (status != sf::Socket::Done) printf("Failed to connect to server. Retrying...\n");
-	else printf("Connected to server!\n");
+		if (status != sf::Socket::Done) printf("Failed to connect to server. Retrying...\n");
+		else
+		{
+			printf("Connected to server!\n");
+			connected = true;
+		}
+	}
+	else
+	{
+
+	}
 }
