@@ -25,6 +25,10 @@ void Client::update()
 	}
 	else
 	{
-		udpSocket.send(0, 100, SERVER, UDP_PORT);
+		sf::Packet packet;
+
+		packet << "Blargh.";
+
+		if (udpSocket.send(packet, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
 	}
 }

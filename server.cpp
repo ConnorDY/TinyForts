@@ -6,6 +6,7 @@
 Server::Server() : clientNum(0)
 {
 	listener.setBlocking(false);
+	socket.setBlocking(false);
 
 	clients.reserve(3);
 
@@ -33,17 +34,13 @@ void Server::update()
 	}
 
 	// Current client connections
-	for (std::vector<sf::IpAddress>::iterator it = clients.begin(); it != clients.end(); ++it)
+	sf::IpAddress sender;
+	std::size_t received;
+	unsigned short port;
+	char data[100];
+
+	if (socket.receive(data, 100, received, sender, port) == sf::Socket::Done)
 	{
-		sf::IpAddress client = *it;
-
-		std::size_t received;
-		unsigned short port;
-		char data[100];
-
-		if (socket.receive(data, 100, received, client, port) == sf::Socket::Done)
-		{
-			printf("Received data: %s!\n", data);
-		}
+		std::cout << "Received " << received << " bytes from " << sender << " on port " << port << std::endl;
 	}
 }
