@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include <SFML/Network.hpp>
+#include "network_player.h"
 
 class Client
 {
@@ -12,7 +13,7 @@ class Client
 	public:
 		Client();
 
-		void update(double x, double y, double angle);
+		void update(network_player p);
 };
 
 #endif

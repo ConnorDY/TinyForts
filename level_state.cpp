@@ -134,5 +134,14 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 	Client *client = getStateManager().getClient();
 
 	if (server != nullptr) server->update();
-	if (client != nullptr) client->update(player->getX(), player->getY(), player->getAngle());
+	if (client != nullptr)
+	{
+		network_player p;
+		p.x = player->getX();
+		p.y = player->getY();
+		p.angle = player->getAngle();
+		p.frame = player->getFrame();
+
+		client->update(p);
+	}
 }

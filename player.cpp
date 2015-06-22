@@ -50,6 +50,7 @@ Player::Player(Room &room, double x, double y)
 
 /* Accessors */
 double Player::getAngle() const { return angle; }
+int Player::getFrame() const { return frame; }
 
 
 /* Actions */

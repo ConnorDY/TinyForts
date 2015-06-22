@@ -10,7 +10,7 @@ Client::Client() : connected(false)
 	if (udpSocket.bind(UDP_PORT) != sf::Socket::Done) printf("Could not bind server UDP socket to port %d.\n", UDP_PORT);
 }
 
-void Client::update(double x, double y, double angle)
+void Client::update(network_player p)
 {
 	if (!connected)
 	{
@@ -27,7 +27,7 @@ void Client::update(double x, double y, double angle)
 	{
 		sf::Packet packet;
 
-		packet << x << y << angle;
+		packet << p.x << p.y << p.angle << p.frame;
 
 		if (udpSocket.send(packet, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
 	}

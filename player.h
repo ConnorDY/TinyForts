@@ -17,6 +17,7 @@ class Player : public Object
 
 		// Accessors
 		double getAngle() const;
+		int getFrame() const;
 
 		// Actions
 		void move(int dir, sf::Vector2i m);

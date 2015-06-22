@@ -27,7 +27,10 @@ void Server::update()
 			sf::IpAddress ip = client->getRemoteAddress();
 			std::cout << "Client connected: " << ip.toString() << std::endl;
 
-			clients.push_back(ip);
+			network_player p;
+			p.ip = ip;
+
+			clients.push_back(p);
 			clientNum++;
 		}
 		else delete client;
@@ -42,8 +45,8 @@ void Server::update()
 	{
 		std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
 
-		double x, y, angle;
+		network_player p;
 
-		if (packet >> x >> y >> angle) std::cout << "X: " << x << " | Y: " << y << " | Angle: " << angle << std::endl;
+		if (packet >> p.x >> p.y >> p.angle >> p.frame) std::cout << "X: " << p.x << " | Y: " << p.y << " | Angle: " << p.angle << std::endl;
 	}
 }
