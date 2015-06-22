@@ -37,16 +37,12 @@ void Bullet::update(sf::Time deltaTime)
 
 	double mstime = deltaTime.asMicroseconds() / 1000.0f;
 
-	// Update Y
-	if (placeFree(x, y + (dy * mstime))) y += dy * mstime;
-	else
+	// Update position
+	if (placeFree(x + (dx * mstime), y + (dy * mstime)))
 	{
-		kill();
-		return;
+		x += dx * mstime;
+		y += dy * mstime;
 	}
-
-	// Update X
-	if (placeFree(x + (dx * mstime), y)) x += dx * mstime;
 	else
 	{
 		kill();
