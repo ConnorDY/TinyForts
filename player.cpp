@@ -40,6 +40,7 @@ Player::Player(Room &room, double x, double y)
 	moveSpeed(0.17), jumpSpeed(0.51)
 {
 	spr.setTexture(room.textureManager.getRef("player"));
+	spr.setColor(sf::Color(255, 0, 0));
 	origin = sf::Vector2f(13, 29);
 }
 

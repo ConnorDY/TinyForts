@@ -65,6 +65,8 @@ void Level_State::start()
 	spawn(new Block(*this, 448, 568, 16, 32));
 	spawn(new Block(*this, 448, 568, 192, 16));
 	spawn(new Block(*this, 640,474, 16, 94));
+	spawn(new Block(*this, -4, 87, 164, 16));
+	spawn(new Block(*this, 673, 87, 164, 16));
 
 }
 
