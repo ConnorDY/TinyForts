@@ -7,9 +7,10 @@ Block::Block(Room &room, double x, double y, double width, double height)
 			0, 0, true,
 			0, 0
 	  ),
-	  rectangle(sf::Vector2f(width, height))
+	  rectangle(sf::Vector2f(width, height)), point(sf::Vector2f(1, 1))
 {
 	rectangle.setFillColor(sf::Color(75, 125, 75, 150));
+	point.setFillColor(sf::Color::White);
 }
 
 
@@ -29,6 +30,9 @@ void Block::draw(sf::RenderWindow &window)
 
 	rectangle.setPosition(x, y);
 	window.draw(rectangle);
+
+	point.setPosition(x, y);
+	window.draw(point);
 }
 
 void Block::onDeath()

@@ -1,6 +1,7 @@
 #include "player.h"
 #include "room.h"
 #include "bullet.h"
+#include "globals.h"
 #include "network_player.h"
 #include "network_bullet.h"
 
@@ -68,8 +69,8 @@ network_player Player::getNetworkPlayer() const
 /* Actions */
 void Player::respawn()
 {
-	x = 413;
-	y = 90;
+	x = MAP_SPAWN_X;
+	y = MAP_SPAWN_Y;
 }
 
 void Player::move(int dir, sf::Vector2i m)
