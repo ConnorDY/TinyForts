@@ -31,6 +31,8 @@ void loadRes(TextureManager &textureManager, SoundManager &soundManager)
 		std::tuple<std::string, unsigned char const*, size_t>("map_02_fg", ARRAY_WITH_LENGTH(res_maps_02_fg_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_03_bg", ARRAY_WITH_LENGTH(res_maps_03_bg_png)),
 		std::tuple<std::string, unsigned char const*, size_t>("map_03_fg", ARRAY_WITH_LENGTH(res_maps_03_fg_png)),
+		std::tuple<std::string, unsigned char const*, size_t>("map_04_bg", ARRAY_WITH_LENGTH(res_maps_04_bg_png)),
+		std::tuple<std::string, unsigned char const*, size_t>("map_04_fg", ARRAY_WITH_LENGTH(res_maps_04_fg_png)),
 	};
 
 	auto sounds = std::vector<std::tuple<std::string, unsigned char const*, size_t>>
@@ -52,6 +54,8 @@ void loadRes(TextureManager &textureManager, SoundManager &soundManager)
 		{ "map_02_fg", "res/maps/02/fg.png"},
 		{ "map_03_bg", "res/maps/03/bg.png"},
 		{ "map_03_fg", "res/maps/03/fg.png"},
+		{ "map_04_bg", "res/maps/04/bg.png"},
+		{ "map_04_fg", "res/maps/04/fg.png"},
 	};
 
 	auto sounds = std::vector<std::pair<std::string, std::string>>

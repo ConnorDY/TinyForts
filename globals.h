@@ -17,9 +17,9 @@
 
 #define TICK_TIME 0//(1000.0 / 60.0)
 
-#define MAP 3
-#define MAP_SPAWN_X 156
-#define MAP_SPAWN_Y 350
+#define MAP 4
+#define MAP_SPAWN_X 405
+#define MAP_SPAWN_Y 420
 
 //#define _DEBUG
 

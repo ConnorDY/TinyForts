@@ -122,6 +122,33 @@ void Level_State::start()
 			spawn(new Block(*this, 768, 408, 68, 64));
 			spawn(new Block(*this, 800, 472, 32, 32));
 			break;
+
+		case 4:
+			spawn(new Block(*this, -4, 88, 228, 64));
+			spawn(new Block(*this, 32, 248, 32, 64));
+			spawn(new Block(*this, -4, 216, 68, 32));
+			spawn(new Block(*this, 64, 280, 32, 32));
+			spawn(new Block(*this, -4, 344, 228, 33));
+			spawn(new Block(*this, -4, 384, 36, 64));
+			spawn(new Block(*this, 63, 480, 32, 30));
+			spawn(new Block(*this, -4, 510, 662, 91));
+			spawn(new Block(*this, 126, 376, 34, 64));
+			spawn(new Block(*this, 128, 216, 128, 34));
+			spawn(new Block(*this, 256, 216, 576, 19));
+			spawn(new Block(*this, 606, 88, 230, 64));
+			spawn(new Block(*this, 608, 234, 139, 46));
+			spawn(new Block(*this, 736, 234, 90, 14));
+			spawn(new Block(*this, 608, 344, 198, 32));
+			spawn(new Block(*this, 806, 344, 30, 96));
+			spawn(new Block(*this, 196, 466, 139, 44));
+			spawn(new Block(*this, 334, 492, 151, 19));
+			spawn(new Block(*this, 484, 466, 138, 44));
+			spawn(new Block(*this, 512, 444, 82, 22));
+			spawn(new Block(*this, 544, 414, 32, 30));
+			spawn(new Block(*this, 622, 496, 36, 14));
+			spawn(new Block(*this, 658, 526, 178, 75));
+			spawn(new Block(*this, 770, 511, 66, 15));
+			break;
 	}
 
 }
