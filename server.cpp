@@ -69,7 +69,7 @@ void Server::update(network_player p)
 		network_player p1 = clients.at(i);
 
 		// Send host to all clients
-		packet << sf::Uint8(0) << p.id << p.x << p.y << p.angle << p.frame << p.scale;
+		packet << sf::Uint8(0) << p.id << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
 		if (socket.send(packet, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
 
 		for (unsigned int j = 0; j < clients.size(); j++)
@@ -77,7 +77,7 @@ void Server::update(network_player p)
 			// Send all clients to all clients
 			network_player p2 = clients.at(j);
 
-			packet << sf::Uint8(0) << p2.id << p2.x << p2.y << p2.angle << p2.frame << p2.scale;
+			packet << sf::Uint8(0) << p2.id << p2.x << p2.y << p2.dx << p2.dy << p2.angle << p2.frame << p2.scale;
 			if (socket.send(packet, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
 		}
 	}
@@ -86,7 +86,7 @@ void Server::update(network_player p)
 	sf::IpAddress sender;
 	unsigned short port;
 
-	for (int k = 0; k < 60; k++)
+	for (int k = 0; k < 10; k++)
 	{
 		if (socket.receive(packet, sender, port) == sf::Socket::Done)
 		{
@@ -103,7 +103,7 @@ void Server::update(network_player p)
 				switch (id)
 				{
 					case 0:
-						packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
+						packet >> p.x >> p.y >> p.dx >> p.dy >> p.angle >> p.frame >> p.scale;
 						clients[c] = p;
 						break;
 				}

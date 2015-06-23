@@ -45,7 +45,7 @@ void Client::update(network_player p)
 		// Send
 		if(selfId > 0)
 		{
-			packet << sf::Uint8(0) << p.id << p.x << p.y << p.angle << p.frame << p.scale;
+			packet << sf::Uint8(0) << p.id << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
 			if (udpSocket.send(packet, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
 		}
 
@@ -53,7 +53,7 @@ void Client::update(network_player p)
 		sf::IpAddress sender;
 		unsigned short port;
 
-		for (unsigned int k = 0; k < 60; k++)
+		for (unsigned int k = 0; k < 10; k++)
 		{
 			if (udpSocket.receive(packet, sender, port) == sf::Socket::Done)
 			{
@@ -88,7 +88,7 @@ void Client::update(network_player p)
 					switch (id)
 					{
 						case 0:
-							packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
+							packet >> p.x >> p.y >> p.dx >> p.dy >> p.angle >> p.frame >> p.scale;
 
 							if (pExists) players[c] = p;
 							else players.push_back(p);

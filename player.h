@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "object.h"
+struct network_player;
 
 class Player : public Object
 {
@@ -16,9 +17,7 @@ class Player : public Object
 		Player(Room &room, double x, double y);
 
 		// Accessors
-		double getAngle() const;
-		int getFrame() const;
-		int getScale() const;
+		network_player getNetworkPlayer() const;
 
 		// Actions
 		void move(int dir, sf::Vector2i m);

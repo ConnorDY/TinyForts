@@ -92,6 +92,9 @@ void Level_State::drawBackground(sf::RenderWindow &window)
 	for (network_player p : otherPlayers)
 	{
 		if (p.id == selfId) continue;
+
+		p.x += p.dx;
+		p.y += p.dy;
 		
 		player->drawOther(window, p.x, p.y, p.angle, p.frame, p.scale);
 	}
@@ -145,12 +148,7 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 	Server *server = getStateManager().getServer();
 	Client *client = getStateManager().getClient();
 
-	network_player p;
-	p.x = player->getX();
-	p.y = player->getY();
-	p.angle = player->getAngle();
-	p.frame = floor(player->getFrame());
-	p.scale = player->getScale();
+	network_player p = player->getNetworkPlayer();
 
 	if (server != nullptr)
 	{

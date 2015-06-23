@@ -49,9 +49,20 @@ Player::Player(Room &room, double x, double y)
 
 
 /* Accessors */
-double Player::getAngle() const { return angle; }
-int Player::getFrame() const { return frame; }
-int Player::getScale() const { return scale; }
+network_player Player::getNetworkPlayer() const
+{
+	network_player p;
+	p.ip = sf::IpAddress("127.0.0.1");
+	p.id = -3;
+	p.x = x;
+	p.y = y;
+	p.dx = dx;
+	p.dy = dy;
+	p.angle = angle;
+	p.frame = floor(frame);
+	p.scale = scale;
+	return p;
+}
 
 
 /* Actions */

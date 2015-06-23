@@ -6,7 +6,7 @@
 struct network_player
 {
 	sf::IpAddress ip;
-	double x, y, angle;
+	double x, y, dx, dy, angle;
 	int id, frame, scale;
 };
 
