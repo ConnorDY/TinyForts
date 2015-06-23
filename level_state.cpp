@@ -89,14 +89,17 @@ void Level_State::drawBackground(sf::RenderWindow &window)
 	Client *client = getStateManager().getClient();
 	if (client != nullptr) selfId = client->getSelfId();
 
-	for (network_player p : otherPlayers)
+	for (unsigned int i = 0; i < otherPlayers.size(); i++)
 	{
+		network_player p = otherPlayers.at(i);
 		if (p.id == selfId) continue;
 
 		p.x += p.dx;
 		p.y += p.dy;
 		
 		player->drawOther(window, p.x, p.y, p.angle, p.frame, p.scale);
+
+		otherPlayers[i] = p;
 	}
 }
 
