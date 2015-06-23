@@ -47,7 +47,7 @@ void Server::sendBullet(network_bullet b)
 	// Send bullet to all other clients
 	sf::Packet packetSend;
 	packetSend << sf::Uint8(2) << b._id.owner << b._id.id << b.x << b.y << b.angle << b.speed;
-	sendToAll(packetSend);
+	sendToAll(packetSend, b._id.owner);
 }
 
 void Server::sendDelete(object_id id_d)
@@ -55,7 +55,7 @@ void Server::sendDelete(object_id id_d)
 	// Send delete object request to all other clients
 	sf::Packet packetSend;
 	packetSend << sf::Uint8(3) << id_d.owner << id_d.id;
-	sendToAll(packetSend);
+	sendToAll(packetSend, id_d.owner);
 }
 
 void Server::update(Room &room, network_player playerHost)
@@ -164,10 +164,10 @@ void Server::update(Room &room, network_player playerHost)
 
 					// Delete object
 					case 3:
-						object_id id_r;
-						packetReceive >> id_r.owner >> id_r.id;
-						room.deleteObj(id_r);
-						sendDelete(id_r);
+						object_id id_d;
+						packetReceive >> id_d.owner >> id_d.id;
+						room.deleteObj(id_d);
+						sendDelete(id_d);
 						break;
 				}
 			}

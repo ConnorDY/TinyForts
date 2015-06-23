@@ -221,6 +221,7 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 			if (server != nullptr)
 			{
 				id_b.owner = 0;
+				b._id = id_b;
 				b.ptr->setId(id_b);
 				server->sendBullet(b);
 			}
@@ -228,6 +229,7 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 			if (client != nullptr)
 			{
 				id_b.owner = client->getSelfId();
+				b._id = id_b;
 				b.ptr->setId(id_b);
 				client->sendBullet(b);
 			}
