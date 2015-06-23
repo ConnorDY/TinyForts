@@ -23,7 +23,7 @@ std::vector<network_player> Server::getOtherPlayers() const
 
 
 /* Actions */
-void Server::update(network_player p)
+void Server::update(network_player playerHost)
 {
 	// New client connections
 	if (clientNum < 3)
@@ -65,29 +65,29 @@ void Server::update(network_player p)
 	{
 		sf::Packet packetSend;
 
-		network_player p1 = clients.at(i);
+		network_player playerClientTo = clients.at(i);
 
 		// Send host to all clients
-		packetSend << sf::Uint8(0) << 0 << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
-		if (socket.send(packetSend, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+		packetSend << sf::Uint8(0) << 0 << playerHost.x << playerHost.y << playerHost.dx << playerHost.dy << playerHost.angle << playerHost.frame << playerHost.scale;
+		if (socket.send(packetSend, playerClientTo.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
 
 		for (unsigned int j = 0; j < clients.size(); j++)
 		{
 			// Send all clients to all clients
-			network_player p2 = clients.at(j);
+			network_player playerClient = clients.at(j);
 
-			packetSend << sf::Uint8(0) << p2.id << p2.x << p2.y << p2.dx << p2.dy << p2.angle << p2.frame << p2.scale;
-			if (socket.send(packetSend, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+			packetSend << sf::Uint8(0) << playerClient.id << playerClient.x << playerClient.y << playerClient.dx << playerClient.dy << playerClient.angle << playerClient.frame << playerClient.scale;
+			if (socket.send(packetSend, playerClientTo.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
 		}
 	}
 
 	// Receive
-	sf::IpAddress sender;
-	unsigned short port;
-
 	for (int k = 0; k < 10; k++)
 	{
 		sf::Packet packetReceive;
+		network_player playerReceive;
+		sf::IpAddress sender;
+		unsigned short port;
 
 		if (socket.receive(packetReceive, sender, port) == sf::Socket::Done)
 		{
@@ -96,16 +96,16 @@ void Server::update(network_player p)
 			#endif
 
 			sf::Uint8 id;
-			int c = -1;
-			p.ip = sender;
+			int cId = -1;
+			playerReceive.ip = sender;
 
-			if (packetReceive >> id >> c)
+			if (packetReceive >> id >> cId)
 			{
 				switch (id)
 				{
 					case 0:
-						packetReceive >> p.x >> p.y >> p.dx >> p.dy >> p.angle >> p.frame >> p.scale;
-						clients[c] = p;
+						packetReceive >> playerReceive.x >> playerReceive.y >> playerReceive.dx >> playerReceive.dy >> playerReceive.angle >> playerReceive.frame >> playerReceive.scale;
+						clients[cId - 1] = playerReceive;
 						break;
 				}
 			}

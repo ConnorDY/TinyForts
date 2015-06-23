@@ -57,7 +57,7 @@ void Client::update(network_player p)
 		for (unsigned int k = 0; k < 10; k++)
 		{
 			sf::Packet packetReceive;
-			
+
 			if (udpSocket.receive(packetReceive, sender, port) == sf::Socket::Done)
 			{
 				#ifdef DEBUG_MODE
@@ -98,6 +98,7 @@ void Client::update(network_player p)
 
 						case 1:
 							packetReceive >> selfId;
+							printf("Self ID received: %d", selfId);
 							break;
 					}
 				}

@@ -52,8 +52,8 @@ Player::Player(Room &room, double x, double y)
 network_player Player::getNetworkPlayer() const
 {
 	network_player p;
-	p.ip = sf::IpAddress("127.0.0.1");
-	p.id = -3;
+	//p.ip = sf::IpAddress("127.0.0.1");
+	//p.id = -3;
 	p.x = x;
 	p.y = y;
 	p.dx = dx;
