@@ -74,7 +74,6 @@ int main()
 {
 	// Default settings
 	settings_t settings;
-	settings.window_scale = 2;
 	settings.vsync_on = true;
 	settings.music_on = true;
 	settings.sound_on = true;

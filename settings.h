@@ -3,7 +3,6 @@
 
 struct settings_t
 {
-	int window_scale;
 	bool vsync_on, music_on, sound_on, host;
 };
 
