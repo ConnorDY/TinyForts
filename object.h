@@ -50,6 +50,9 @@ class Object
 		virtual void loopAroundMap();
 		void pushOutOfSolids();
 
+		// Variables
+		bool destroyedByServer;
+
 	protected:
 		Room &room;
 		sf::Sprite sprite;

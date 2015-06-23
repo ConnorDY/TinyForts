@@ -11,7 +11,7 @@ Object::Object(Room &room, double x, double y, double width, double height, doub
 	  depth(0),
 	  solid(solid),
 	  del(false),
-	  id(0)
+	  id(0), destroyedByServer(false)
 {
 }
 

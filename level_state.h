@@ -5,9 +5,9 @@
 #include <vector>
 #include <memory>
 
-struct settings_t;
 class Player;
 #include "room.h"
+#include "settings.h"
 
 class Level_State : public Room
 {

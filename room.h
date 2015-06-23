@@ -2,6 +2,8 @@
 #define ROOM_H
 
 class Object;
+class Server;
+class Client;
 #include "state.h"
 
 class Room : public State

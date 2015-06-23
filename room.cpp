@@ -52,9 +52,11 @@ void Room::deleteObj(unsigned int n)
 {
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
-		if (objects.at(i)->getId() == n)
+		Object* obj = objects.at(i);
+		if (obj->getId() == n)
 		{
-			objects.at(i)->kill();
+			obj->destroyedByServer = true;
+			obj->kill();
 			return;
 		}
 	}
@@ -162,6 +164,17 @@ void Room::update(sf::RenderWindow&, SoundManager&, InputHandler&)
 
 		if (obj->shouldDelete())
 		{
+			// Send deletion to server
+			if (!obj->destroyedByServer)
+			{
+				StateManager &sM = getStateManager();
+				Server *server = sM.getServer();
+				Client *client = sM.getClient();
+
+				if (server != nullptr) server->sendDelete(obj->getId());
+				if (client != nullptr) client->sendDelete(obj->getId());
+			}
+
 			delete obj;
 			iter = objects.erase(iter);
 			end = objects.end();
