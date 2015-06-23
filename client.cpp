@@ -45,8 +45,14 @@ void Client::update(network_player p)
 		// Send
 		if(selfId > 0)
 		{
-			packetSend << sf::Uint8(0) << selfId << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
-			if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
+			sf::Time timePassed = sendTimer.getElapsedTime();
+
+			if (timePassed.asMilliseconds() >= 6.0)
+			{
+				packetSend << sf::Uint8(0) << selfId << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
+				if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
+				else sendTimer.restart();
+			}
 		}
 		else printf("No SelfId received yet.");
 

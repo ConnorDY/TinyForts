@@ -9,6 +9,7 @@ class Server
 	private:
 		sf::TcpListener listener;
 		sf::UdpSocket socket;
+		sf::Clock sendTimer;
 		std::vector<network_player> clients;
 		int clientNum;
 	public:

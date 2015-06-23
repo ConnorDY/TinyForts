@@ -63,21 +63,28 @@ void Server::update(network_player playerHost)
 	// Send
 	for (unsigned int i = 0; i < clients.size(); i++)
 	{
-		sf::Packet packetSend;
-
-		network_player playerClientTo = clients.at(i);
-
-		// Send host to all clients
-		packetSend << sf::Uint8(0) << 0 << playerHost.x << playerHost.y << playerHost.dx << playerHost.dy << playerHost.angle << playerHost.frame << playerHost.scale;
-		if (socket.send(packetSend, playerClientTo.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
-
-		for (unsigned int j = 0; j < clients.size(); j++)
+		sf::Time timePassed = sendTimer.getElapsedTime();
+			
+		if (timePassed.asMilliseconds() >= 6.0)
 		{
-			// Send all clients to all clients
-			network_player playerClient = clients.at(j);
+			sf::Packet packetSend;
 
-			packetSend << sf::Uint8(0) << playerClient.id << playerClient.x << playerClient.y << playerClient.dx << playerClient.dy << playerClient.angle << playerClient.frame << playerClient.scale;
+			network_player playerClientTo = clients.at(i);
+
+			// Send host to all clients
+			packetSend << sf::Uint8(0) << 0 << playerHost.x << playerHost.y << playerHost.dx << playerHost.dy << playerHost.angle << playerHost.frame << playerHost.scale;
 			if (socket.send(packetSend, playerClientTo.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+
+			for (unsigned int j = 0; j < clients.size(); j++)
+			{
+				// Send all clients to all clients
+				network_player playerClient = clients.at(j);
+
+				packetSend << sf::Uint8(0) << playerClient.id << playerClient.x << playerClient.y << playerClient.dx << playerClient.dy << playerClient.angle << playerClient.frame << playerClient.scale;
+				if (socket.send(packetSend, playerClientTo.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+			}
+
+			sendTimer.restart();
 		}
 	}
 
