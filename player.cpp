@@ -66,6 +66,12 @@ network_player Player::getNetworkPlayer() const
 
 
 /* Actions */
+void Player::respawn()
+{
+	x = 413;
+	y = 90;
+}
+
 void Player::move(int dir, sf::Vector2i m)
 {
 	if (m.x < x + (width / 2)) scale = -1;

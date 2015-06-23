@@ -22,6 +22,7 @@ class Player : public Object
 		network_player getNetworkPlayer() const;
 
 		// Actions
+		void respawn();
 		void move(int dir, sf::Vector2i m);
 		void jump();
 		network_bullet shoot() const;

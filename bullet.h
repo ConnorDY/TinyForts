@@ -7,6 +7,7 @@ class Bullet : public Object
 {
 	private:
 		sf::Sprite spr;
+		sf::Clock timer;
 		double speed, angle;
 
 	public:

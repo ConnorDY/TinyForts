@@ -31,7 +31,7 @@ Level_State::~Level_State()
 
 void Level_State::start()
 {
-	player = new Player(*this, 300, 200);
+	player = new Player(*this, 413, 90);
 	spawn(player);
 
 	spawn(new Block(*this, 160, 87, 224, 33));

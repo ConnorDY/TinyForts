@@ -1,4 +1,5 @@
 #include "bullet.h"
+#include "player.h"
 #include "block.h"
 #include "room.h"
 
@@ -33,8 +34,6 @@ void Bullet::update(sf::Time deltaTime)
 {
 	double mstime = deltaTime.asMicroseconds() / 1000.0f;
 
-	// Should these be moved to Object?
-
 	// Gravity
 	dy += gravity * mstime;
 	if (dy > maxFallSpeed) dy = maxFallSpeed;
@@ -52,6 +51,20 @@ void Bullet::update(sf::Time deltaTime)
 	}
 
 	loopAroundMap();
+
+	if (timer.getElapsedTime().asMilliseconds() < 400) return;
+
+	std::vector<Object*> col = allCollisions(x, y);
+	for (Object* obj : col)
+	{
+		Player* plyr = dynamic_cast<Player*>(obj);
+		if (plyr != nullptr)
+		{
+			plyr->respawn();
+			kill();
+			return;
+		}
+	}
 }
 
 void Bullet::onDeath()
