@@ -3,6 +3,7 @@
 #include "block.h"
 #include "globals.h"
 #include "menu_state.h"
+#include "network_player.h"
 #include "server.h"
 #include "client.h"
 
@@ -84,8 +85,14 @@ void Level_State::drawBackground(sf::RenderWindow &window)
 {
 	window.draw(bg);
 
+	int selfId = -1;
+	Client *client = getStateManager().getClient();
+	if (client != nullptr) selfId = client->getSelfId();
+
 	for (network_player p : otherPlayers)
 	{
+		if (p.id == selfId) continue;
+		
 		player->drawOther(window, p.x, p.y, p.angle, p.frame, p.scale);
 	}
 }
@@ -138,21 +145,22 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 	Server *server = getStateManager().getServer();
 	Client *client = getStateManager().getClient();
 
+	network_player p;
+	p.x = player->getX();
+	p.y = player->getY();
+	p.angle = player->getAngle();
+	p.frame = floor(player->getFrame());
+	p.scale = player->getScale();
+
 	if (server != nullptr)
 	{
-		server->update();
+		server->update(p);
 		otherPlayers = server->getOtherPlayers();
 	}
 
 	if (client != nullptr)
 	{
-		network_player p;
-		p.x = player->getX();
-		p.y = player->getY();
-		p.angle = player->getAngle();
-		p.frame = floor(player->getFrame());
-		p.scale = player->getScale();
-
 		client->update(p);
+		otherPlayers = client->getOtherPlayers();
 	}
 }

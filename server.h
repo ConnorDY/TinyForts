@@ -18,7 +18,7 @@ class Server
 		std::vector<network_player> getOtherPlayers() const;
 
 		// Actions
-		void update();
+		void update(network_player p);
 };
 
 #endif

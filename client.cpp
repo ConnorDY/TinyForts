@@ -10,6 +10,20 @@ Client::Client() : connected(false), selfId(-1)
 	if (udpSocket.bind(UDP_PORT) != sf::Socket::Done) printf("Could not bind server UDP socket to port %d.\n", UDP_PORT);
 }
 
+
+/* Accessors */
+std::vector<network_player> Client::getOtherPlayers() const
+{
+	return players;
+}
+
+int Client::getSelfId() const
+{
+	return selfId;
+}
+
+
+/* Actions */
 void Client::update(network_player p)
 {
 	if (!connected)
@@ -49,12 +63,33 @@ void Client::update(network_player p)
 			p.ip = sender;
 
 			if (packet >> id)
-			{
+			{	
+				bool pExists = true;
+				int c = -1;
+
+				if (id == 0)
+				{
+					packet >> p.id;
+
+					for (unsigned int i = 0; i < players.size(); i++)
+					{
+						if (players.at(i).id == p.id)
+						{
+							c = i;
+							break;
+						}
+					}
+
+					if (c < 0) pExists = false;
+				}
+
 				switch (id)
 				{
 					case 0:
-						packet >> p.id >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
-						players[p.id] = p;
+						packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
+
+						if (pExists) players[c] = p;
+						else players.push_back(p);
 						break;
 
 					case 1:

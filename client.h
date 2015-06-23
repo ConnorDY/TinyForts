@@ -15,6 +15,11 @@ class Client
 	public:
 		Client();
 
+		// Accessors
+		std::vector<network_player> getOtherPlayers() const;
+		int getSelfId() const;
+
+		// Actions
 		void update(network_player p);
 };
 

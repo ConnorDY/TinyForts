@@ -23,7 +23,7 @@ std::vector<network_player> Server::getOtherPlayers() const
 
 
 /* Actions */
-void Server::update()
+void Server::update(network_player p)
 {
 	// New client connections
 	if (clientNum < 3)
@@ -62,7 +62,6 @@ void Server::update()
 
 	// Current client connections
 	sf::Packet packet;
-	network_player p;
 
 	// Send
 	for (unsigned int i = 0; i < clients.size(); i++)
