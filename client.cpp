@@ -53,48 +53,51 @@ void Client::update(network_player p)
 		sf::IpAddress sender;
 		unsigned short port;
 
-		if (udpSocket.receive(packet, sender, port) == sf::Socket::Done)
+		for (unsigned int k = 0; k < 5; k++)
 		{
-			#ifdef DEBUG_MODE
-			//std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
-			#endif
+			if (udpSocket.receive(packet, sender, port) == sf::Socket::Done)
+			{
+				#ifdef DEBUG_MODE
+				//std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+				#endif
 
-			sf::Uint8 id;
-			p.ip = sender;
+				sf::Uint8 id;
+				p.ip = sender;
 
-			if (packet >> id)
-			{	
-				bool pExists = true;
-				int c = -1;
-
-				if (id == 0)
+				if (packet >> id)
 				{
-					packet >> p.id;
+					bool pExists = true;
+					int c = -1;
 
-					for (unsigned int i = 0; i < players.size(); i++)
+					if (id == 0)
 					{
-						if (players.at(i).id == p.id)
+						packet >> p.id;
+
+						for (unsigned int i = 0; i < players.size(); i++)
 						{
-							c = i;
-							break;
+							if (players.at(i).id == p.id)
+							{
+								c = i;
+								break;
+							}
 						}
+
+						if (c < 0) pExists = false;
 					}
 
-					if (c < 0) pExists = false;
-				}
+					switch (id)
+					{
+						case 0:
+							packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
 
-				switch (id)
-				{
-					case 0:
-						packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
+							if (pExists) players[c] = p;
+							else players.push_back(p);
+							break;
 
-						if (pExists) players[c] = p;
-						else players.push_back(p);
-						break;
-
-					case 1:
-						packet >> selfId;
-						break;
+						case 1:
+							packet >> selfId;
+							break;
+					}
 				}
 			}
 		}

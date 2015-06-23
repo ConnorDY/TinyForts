@@ -86,24 +86,27 @@ void Server::update(network_player p)
 	sf::IpAddress sender;
 	unsigned short port;
 
-	if (socket.receive(packet, sender, port) == sf::Socket::Done)
+	for (int k = 0; k < 5; k++)
 	{
-		#ifdef DEBUG_MODE
-		//std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
-		#endif
-
-		sf::Uint8 id;
-		int c = -1;
-		p.ip = sender;
-
-		if (packet >> id >> c)
+		if (socket.receive(packet, sender, port) == sf::Socket::Done)
 		{
-			switch (id)
+			#ifdef DEBUG_MODE
+			//std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+			#endif
+
+			sf::Uint8 id;
+			int c = -1;
+			p.ip = sender;
+
+			if (packet >> id >> c)
 			{
-				case 0:
-					packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
-					clients[c] = p;
-					break;
+				switch (id)
+				{
+					case 0:
+						packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
+						clients[c] = p;
+						break;
+				}
 			}
 		}
 	}
