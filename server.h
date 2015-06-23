@@ -23,7 +23,9 @@ class Server
 		std::vector<network_player> getOtherPlayers() const;
 
 		// Actions
+		void sendToAll(sf::Packet packetSend);
 		void sendBullet(network_bullet b);
+		void sendDelete(unsigned int n);
 		void update(Room &room, network_player p);
 };
 

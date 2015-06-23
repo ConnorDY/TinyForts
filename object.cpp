@@ -10,7 +10,8 @@ Object::Object(Room &room, double x, double y, double width, double height, doub
 	  maxFallSpeed(maxFallSpeed),
 	  depth(0),
 	  solid(solid),
-	  del(false)
+	  del(false),
+	  id(0)
 {
 }
 
@@ -20,6 +21,7 @@ Object::~Object()
 }
 
 /* Accessors */
+unsigned int Object::getId() const { return id; }
 int Object::getDepth() const { return depth; }
 bool Object::isSolid() const { return solid; }
 bool Object::shouldDelete() const { return del; }
@@ -70,6 +72,11 @@ bool Object::canLoopAround() const
 
 
 /* Mutators*/
+void Object::setId(unsigned int n)
+{
+	id = n;
+}
+
 void Object::setX(double xx)
 {
 	x = xx;

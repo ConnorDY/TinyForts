@@ -25,16 +25,28 @@ std::vector<network_player> Server::getOtherPlayers() const
 
 
 /* Actions */
+void Server::sendToAll(sf::Packet packetSend)
+{
+	for (unsigned int i = 0; i < clients.size(); i++)
+	{
+		if (socket.send(packetSend, clients.at(i).ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+	}
+}
+
 void Server::sendBullet(network_bullet b)
 {
 	// Send bullet to all other clients
 	sf::Packet packetSend;
 	packetSend << sf::Uint8(2) << b.x << b.y << b.angle << b.speed;
+	sendToAll(packetSend);
+}
 
-	for (unsigned int i = 0; i < clients.size(); i++)
-	{
-		if (socket.send(packetSend, clients.at(i).ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
-	}
+void Server::sendDelete(unsigned int n)
+{
+	// Send delete object request to all other clients
+	sf::Packet packetSend;
+	packetSend << sf::Uint8(3) << n;
+	sendToAll(packetSend);
 }
 
 void Server::update(Room &room, network_player playerHost)
@@ -75,31 +87,24 @@ void Server::update(Room &room, network_player playerHost)
 	}
 
 	// Send
-	for (unsigned int i = 0; i < clients.size(); i++)
+	sf::Time timePassed = sendTimer.getElapsedTime();
+
+	if (timePassed.asMilliseconds() >= TICK_TIME)
 	{
-		sf::Time timePassed = sendTimer.getElapsedTime();
-			
-		if (timePassed.asMilliseconds() >= TICK_TIME)
+		// Send host player to all clients
+		sf::Packet packetHost;
+		packetHost << sf::Uint8(0) << 0 << playerHost.x << playerHost.y << playerHost.dx << playerHost.dy << playerHost.angle << playerHost.frame << playerHost.scale;
+		sendToAll(packetHost);
+
+		for (unsigned int i = 0; i < clients.size(); i++)
 		{
 			sf::Packet packetSend;
-
-			network_player playerClientTo = clients.at(i);
-
-			// Send host to all clients
-			packetSend << sf::Uint8(0) << 0 << playerHost.x << playerHost.y << playerHost.dx << playerHost.dy << playerHost.angle << playerHost.frame << playerHost.scale;
-			if (socket.send(packetSend, playerClientTo.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
-
-			for (unsigned int j = 0; j < clients.size(); j++)
-			{
-				// Send all clients to all clients
-				network_player playerClient = clients.at(j);
-
-				packetSend << sf::Uint8(0) << playerClient.id << playerClient.x << playerClient.y << playerClient.dx << playerClient.dy << playerClient.angle << playerClient.frame << playerClient.scale;
-				if (socket.send(packetSend, playerClientTo.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
-			}
-
-			sendTimer.restart();
+			network_player playerClient = clients.at(i);
+			packetSend << sf::Uint8(0) << playerClient.id << playerClient.x << playerClient.y << playerClient.dx << playerClient.dy << playerClient.angle << playerClient.frame << playerClient.scale;
+			sendToAll(packetSend);
 		}
+
+		sendTimer.restart();
 	}
 
 	// Receive
@@ -132,7 +137,7 @@ void Server::update(Room &room, network_player playerHost)
 
 					// Disconnect
 					case 1:
-						
+
 						break;
 
 					// Bullet fired
@@ -141,6 +146,14 @@ void Server::update(Room &room, network_player playerHost)
 						packetReceive >> b.x >> b.y >> b.angle >> b.speed;
 						room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
 						sendBullet(b);
+						break;
+
+					// Delete object
+					case 3:
+						unsigned int n;
+						packetReceive >> n;
+						room.deleteObj(n);
+						sendDelete(n);
 						break;
 				}
 			}

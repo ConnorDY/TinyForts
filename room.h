@@ -17,6 +17,7 @@ class Room : public State
 		std::vector<Object*> spawnQueue;            // Queue of objects to be spawned next tick
 		settings_t &settings;
 		double multiplier;
+		unsigned int objNum;
 
 	public:
 		SoundManager &soundManager;                 // Sound manager for use by objects in this room
@@ -32,6 +33,7 @@ class Room : public State
 		double getMultiplier() const;
 
 		void spawn(Object *obj);
+		void deleteObj(unsigned int n);
 		void setMultiplier(double m);
 
 		virtual void start();

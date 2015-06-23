@@ -9,7 +9,7 @@ Room::Room(StateManager &stm, SoundManager &som, TextureManager const &tm, setti
 	: State(stm),
 	  width(VIEW_WIDTH), height(VIEW_HEIGHT), multiplier(1),
 	  settings(settings), soundManager(som), textureManager(tm),
-	  view_follow(nullptr)
+	  view_follow(nullptr), objNum(0)
 {
 	setView(sf::View(sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT), sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT)));
 }
@@ -43,7 +43,21 @@ double Room::getMultiplier() const
 
 void Room::spawn(Object *obj)
 {
+	obj->setId(objNum);
+	objNum++;
 	spawnQueue.push_back(obj);
+}
+
+void Room::deleteObj(unsigned int n)
+{
+	for (unsigned int i = 0; i < objects.size(); i++)
+	{
+		if (objects.at(i)->getId() == n)
+		{
+			objects.at(i)->kill();
+			return;
+		}
+	}
 }
 
 void Room::setMultiplier(double m)

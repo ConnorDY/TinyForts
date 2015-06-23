@@ -27,13 +27,25 @@ int Client::getSelfId() const
 
 
 /* Actions */
+void Client::sendToServer(sf::Packet packetSend)
+{
+	if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
+}
+
 void Client::sendBullet(network_bullet b)
 {
-	// Send bullet to all other clients
+	// Send bullet to server
 	sf::Packet packetSend;
 	packetSend << sf::Uint8(2) << b.x << b.y << b.angle << b.speed;
+	sendToServer(packetSend);
+}
 
-	if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
+void Client::sendDelete(unsigned int n)
+{
+	// Send bullet to server
+	sf::Packet packetSend;
+	packetSend << sf::Uint8(3) << n;
+	sendToServer(packetSend);
 }
 
 
@@ -62,8 +74,8 @@ void Client::update(Room &room, network_player p)
 			if (timePassed.asMilliseconds() >= TICK_TIME)
 			{
 				packetSend << sf::Uint8(0) << selfId << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
-				if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
-				else sendTimer.restart();
+				sendToServer(packetSend);
+				sendTimer.restart();
 			}
 		}
 		else printf("No SelfId received yet.");
@@ -125,6 +137,13 @@ void Client::update(Room &room, network_player p)
 							network_bullet b;
 							packetReceive >> b.x >> b.y >> b.angle >> b.speed;
 							room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
+							break;
+
+						// Delete object
+						case 3:
+							unsigned int n;
+							packetReceive >> n;
+							room.deleteObj(n);
 							break;
 					}
 				}

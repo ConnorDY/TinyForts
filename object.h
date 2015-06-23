@@ -21,6 +21,7 @@ class Object
 		virtual ~Object();
 
 		// Accessors
+		unsigned int getId() const;
 		int getDepth() const;
 		bool isSolid() const;
 		bool shouldDelete() const;
@@ -34,6 +35,7 @@ class Object
 		std::vector<Object*> allCollisions(double xx, double yy) const;
 
 		// Mutators
+		void setId(unsigned int n);
 		void setX(double xx);
 		void setY(double yy);
 		void setDepth(int depth);
@@ -53,6 +55,7 @@ class Object
 		sf::Sprite sprite;
 		double x, y, width, height, dx, dy, gravity, maxFallSpeed;
 		int depth;
+		unsigned int id;
 		bool solid, del;
 };
 

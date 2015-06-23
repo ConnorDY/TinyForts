@@ -25,7 +25,9 @@ class Client
 		int getSelfId() const;
 
 		// Actions
+		void sendToServer(sf::Packet packetSend);
 		void sendBullet(network_bullet b);
+		void sendDelete(unsigned int n);
 		void update(Room &room, network_player p);
 };
 
