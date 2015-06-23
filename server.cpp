@@ -41,6 +41,7 @@ void Server::update()
 			p.y = -128;
 			p.angle = 0;
 			p.frame = 0;
+			p.scale = 1;
 			p.ip = ip;
 
 			clients.push_back(p);
@@ -77,10 +78,7 @@ void Server::update()
 			switch (id)
 			{
 				case 0:
-					packet >> p.x >> p.y >> p.angle >> p.frame;
-
-					std::cout << "X: " << p.x << " | Y: " << p.y << " | Angle: " << p.angle << std::endl;
-
+					packet >> p.x >> p.y >> p.angle >> p.frame >> p.scale;
 					clients[c] = p;
 					break;
 			}
