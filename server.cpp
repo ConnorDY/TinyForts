@@ -78,7 +78,7 @@ void Server::update(network_player p)
 			network_player p2 = clients.at(j);
 
 			packet << sf::Uint8(0) << p2.id << p2.x << p2.y << p2.angle << p2.frame << p2.scale;
-			if (socket.send(packet, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", j);
+			if (socket.send(packet, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
 		}
 	}
 
@@ -89,7 +89,7 @@ void Server::update(network_player p)
 	if (socket.receive(packet, sender, port) == sf::Socket::Done)
 	{
 		#ifdef DEBUG_MODE
-		std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+		//std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
 		#endif
 
 		sf::Uint8 id;

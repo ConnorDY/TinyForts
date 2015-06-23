@@ -1,6 +1,7 @@
 #include "client.h"
 #include "globals.h"
 #include <stdio.h>
+#include <iostream>
 
 Client::Client() : connected(false), selfId(-1)
 {
@@ -55,7 +56,7 @@ void Client::update(network_player p)
 		if (udpSocket.receive(packet, sender, port) == sf::Socket::Done)
 		{
 			#ifdef DEBUG_MODE
-			std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+			//std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
 			#endif
 
 			sf::Uint8 id;

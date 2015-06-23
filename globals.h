@@ -15,7 +15,7 @@
 #define TCP_PORT 5060
 #define SERVER "192.168.1.87"
 
-//#define _DEBUG
+#define _DEBUG
 
 #ifdef _DEBUG
 	#define DEBUG_MODE
