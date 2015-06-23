@@ -1,6 +1,8 @@
 #include "player.h"
 #include "room.h"
 #include "bullet.h"
+#include "network_player.h"
+#include "network_bullet.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -52,8 +54,6 @@ Player::Player(Room &room, double x, double y)
 network_player Player::getNetworkPlayer() const
 {
 	network_player p;
-	//p.ip = sf::IpAddress("127.0.0.1");
-	//p.id = -3;
 	p.x = x;
 	p.y = y;
 	p.dx = dx;
@@ -80,9 +80,17 @@ void Player::jump()
 	if (dy == 0) dy = -jumpSpeed;
 }
 
-void Player::shoot()
+network_bullet Player::shoot() const
 {
-	room.spawn(new Bullet(room, x + (scale * ARM_X), y + ARM_Y, .3, angle + 180.0));
+	network_bullet b;
+	b.x = x + (scale * ARM_X);
+	b.y = y + ARM_Y;
+	b.speed = .3;
+	b.angle = angle + 180.0;
+
+	room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
+
+	return b;
 }
 
 void Player::setAnimation(std::vector<sf::IntRect> const &newAnim)

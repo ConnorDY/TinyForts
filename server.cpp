@@ -1,4 +1,6 @@
 #include "server.h"
+#include "bullet.h"
+#include "room.h"
 #include "globals.h"
 #include <stdio.h>
 #include <iostream>
@@ -23,7 +25,19 @@ std::vector<network_player> Server::getOtherPlayers() const
 
 
 /* Actions */
-void Server::update(network_player playerHost)
+void Server::sendBullet(network_bullet b)
+{
+	// Send bullet to all other clients
+	sf::Packet packetSend;
+	packetSend << sf::Uint8(2) << b.x << b.y << b.angle << b.speed;
+
+	for (unsigned int i = 0; i < clients.size(); i++)
+	{
+		if (socket.send(packetSend, clients.at(i).ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+	}
+}
+
+void Server::update(Room &room, network_player playerHost)
 {
 	// New client connections
 	if (clientNum < 3)
@@ -110,9 +124,18 @@ void Server::update(network_player playerHost)
 			{
 				switch (id)
 				{
+					// Player Position
 					case 0:
 						packetReceive >> playerReceive.x >> playerReceive.y >> playerReceive.dx >> playerReceive.dy >> playerReceive.angle >> playerReceive.frame >> playerReceive.scale;
 						clients[cId - 1] = playerReceive;
+						break;
+
+					// Bullet fired
+					case 2:
+						network_bullet b;
+						packetReceive >> b.x >> b.y >> b.angle >> b.speed;
+						room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
+						sendBullet(b);
 						break;
 				}
 			}

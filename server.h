@@ -2,7 +2,11 @@
 #define SERVER_H
 
 #include <SFML/Network.hpp>
+
 #include "network_player.h"
+#include "network_bullet.h"
+
+class Room;
 
 class Server
 {
@@ -19,7 +23,8 @@ class Server
 		std::vector<network_player> getOtherPlayers() const;
 
 		// Actions
-		void update(network_player p);
+		void sendBullet(network_bullet b);
+		void update(Room &room, network_player p);
 };
 
 #endif

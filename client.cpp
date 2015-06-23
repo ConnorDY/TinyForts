@@ -1,4 +1,6 @@
 #include "client.h"
+#include "bullet.h"
+#include "room.h"
 #include "globals.h"
 #include <stdio.h>
 #include <iostream>
@@ -25,7 +27,17 @@ int Client::getSelfId() const
 
 
 /* Actions */
-void Client::update(network_player p)
+void Client::sendBullet(network_bullet b)
+{
+	// Send bullet to all other clients
+	sf::Packet packetSend;
+	packetSend << sf::Uint8(2) << b.x << b.y << b.angle << b.speed;
+
+	if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
+}
+
+
+void Client::update(Room &room, network_player p)
 {
 	if (!connected)
 	{
@@ -95,16 +107,24 @@ void Client::update(network_player p)
 
 					switch (id)
 					{
+						// Player position
 						case 0:
 							packetReceive >> p.x >> p.y >> p.dx >> p.dy >> p.angle >> p.frame >> p.scale;
-
 							if (pExists) players[c] = p;
 							else players.push_back(p);
 							break;
 
+						// Client ID
 						case 1:
 							packetReceive >> selfId;
 							printf("Self ID received: %d", selfId);
+							break;
+
+						// Bullet fired
+						case 2:
+							network_bullet b;
+							packetReceive >> b.x >> b.y >> b.angle >> b.speed;
+							room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
 							break;
 					}
 				}

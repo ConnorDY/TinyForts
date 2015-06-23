@@ -2,7 +2,9 @@
 #define PLAYER_H
 
 #include "object.h"
+
 struct network_player;
+struct network_bullet;
 
 class Player : public Object
 {
@@ -22,7 +24,7 @@ class Player : public Object
 		// Actions
 		void move(int dir, sf::Vector2i m);
 		void jump();
-		void shoot();
+		network_bullet shoot() const;
 		void setAnimation(std::vector<sf::IntRect> const &newAnim);
 		void updateAnimation(sf::Time deltaTime);
 		virtual void loopAroundMap() override;

@@ -113,6 +113,9 @@ void Level_State::drawForeground(sf::RenderWindow &window)
 
 void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, InputHandler &inputHandler)
 {
+	Server *server = getStateManager().getServer();
+	Client *client = getStateManager().getClient();
+
 	int moveH = inputHandler.checkInput(InputHandler::Input::Right) - inputHandler.checkInput(InputHandler::Input::Left); // Horizontal Movement
 
 	sf::Event event;
@@ -138,7 +141,12 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 			player->jump(); // Jumping
 
 		if (inputHandler.checkInput(InputHandler::Input::PressL, event))
-			player->shoot();
+		{
+			network_bullet b = player->shoot();
+
+			if (server != nullptr) server->sendBullet(b);
+			if (client != nullptr) client->sendBullet(b);
+		}
 	}
 
 	mouse = sf::Mouse::getPosition(window);
@@ -148,20 +156,17 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 	Room::update(window, soundManager, inputHandler);
 
 	// Networking
-	Server *server = getStateManager().getServer();
-	Client *client = getStateManager().getClient();
-
 	network_player p = player->getNetworkPlayer();
 
 	if (server != nullptr)
 	{
-		server->update(p);
+		server->update(*this, p);
 		otherPlayers = server->getOtherPlayers();
 	}
 
 	if (client != nullptr)
 	{
-		client->update(p);
+		client->update(*this, p);
 		otherPlayers = client->getOtherPlayers();
 	}
 }

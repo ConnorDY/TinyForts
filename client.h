@@ -2,7 +2,11 @@
 #define CLIENT_H
 
 #include <SFML/Network.hpp>
+
 #include "network_player.h"
+#include "network_bullet.h"
+
+class Room;
 
 class Client
 {
@@ -21,7 +25,8 @@ class Client
 		int getSelfId() const;
 
 		// Actions
-		void update(network_player p);
+		void sendBullet(network_bullet b);
+		void update(Room &room, network_player p);
 };
 
 #endif
