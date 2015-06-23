@@ -45,7 +45,6 @@ void Client::update(network_player p)
 		if(selfId > 0)
 		{
 			packet << sf::Uint8(0) << p.id << p.x << p.y << p.angle << p.frame << p.scale;
-
 			if (udpSocket.send(packet, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
 		}
 

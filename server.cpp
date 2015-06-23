@@ -66,11 +66,20 @@ void Server::update(network_player p)
 	// Send
 	for (unsigned int i = 0; i < clients.size(); i++)
 	{
-		p = clients.at(i);
+		network_player p1 = clients.at(i);
 
+		// Send host to all clients
 		packet << sf::Uint8(0) << p.id << p.x << p.y << p.angle << p.frame << p.scale;
+		if (socket.send(packet, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
 
-		if (socket.send(packet, p.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+		for (unsigned int j = 0; j < clients.size(); j++)
+		{
+			// Send all clients to all clients
+			network_player p2 = clients.at(j);
+
+			packet << sf::Uint8(0) << p2.id << p2.x << p2.y << p2.angle << p2.frame << p2.scale;
+			if (socket.send(packet, p1.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", j);
+		}
 	}
 
 	// Receive
