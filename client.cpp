@@ -40,14 +40,15 @@ void Client::update(network_player p)
 	}
 	else
 	{
-		sf::Packet packet;
+		sf::Packet packetSend;
 
 		// Send
 		if(selfId > 0)
 		{
-			packet << sf::Uint8(0) << selfId << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
-			if (udpSocket.send(packet, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
+			packetSend << sf::Uint8(0) << selfId << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
+			if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
 		}
+		else printf("No SelfId received yet.");
 
 		// Receive
 		sf::IpAddress sender;
@@ -55,23 +56,25 @@ void Client::update(network_player p)
 
 		for (unsigned int k = 0; k < 10; k++)
 		{
-			if (udpSocket.receive(packet, sender, port) == sf::Socket::Done)
+			sf::Packet packetReceive;
+			
+			if (udpSocket.receive(packetReceive, sender, port) == sf::Socket::Done)
 			{
 				#ifdef DEBUG_MODE
-				std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+				std::cout << "Received " << packetReceive.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
 				#endif
 
 				sf::Uint8 id;
 				p.ip = sender;
 
-				if (packet >> id)
+				if (packetReceive >> id)
 				{
 					bool pExists = false;
 					int c = -1;
 
 					if (id == 0)
 					{
-						packet >> p.id;
+						packetReceive >> p.id;
 
 						for (unsigned int i = 0; i < players.size(); i++)
 						{
@@ -87,14 +90,14 @@ void Client::update(network_player p)
 					switch (id)
 					{
 						case 0:
-							packet >> p.x >> p.y >> p.dx >> p.dy >> p.angle >> p.frame >> p.scale;
+							packetReceive >> p.x >> p.y >> p.dx >> p.dy >> p.angle >> p.frame >> p.scale;
 
 							if (pExists) players[c] = p;
 							else players.push_back(p);
 							break;
 
 						case 1:
-							packet >> selfId;
+							packetReceive >> selfId;
 							break;
 					}
 				}
