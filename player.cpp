@@ -51,6 +51,7 @@ Player::Player(Room &room, double x, double y)
 /* Accessors */
 double Player::getAngle() const { return angle; }
 int Player::getFrame() const { return frame; }
+int Player::getScale() const { return scale; }
 
 
 /* Actions */
@@ -166,7 +167,7 @@ void Player::draw(sf::RenderWindow &window)
 	}
 }
 
-void Player::drawOther(sf::RenderWindow &window, double x_, double y_, double angle_, int frame_)
+void Player::drawOther(sf::RenderWindow &window, double x_, double y_, double angle_, int frame_, int scale_)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
@@ -209,13 +210,13 @@ void Player::drawOther(sf::RenderWindow &window, double x_, double y_, double an
 		spr.setOrigin(0, 3);
 		spr.setScale(1, 1);
 		spr.setRotation(angle_ + 180);
-		spr.setPosition(xx + (width / 2) + (scale * ARM_X), ceil(yy) + ARM_Y);
+		spr.setPosition(xx + (width / 2) + (scale_ * ARM_X), ceil(yy) + ARM_Y);
 		window.draw(spr);
 
 		// Body
 		spr.setTextureRect(ANIM.WALKING[frame_]);
 		spr.setOrigin(origin);
-		spr.setScale(sf::Vector2f(scale, 1));
+		spr.setScale(sf::Vector2f(scale_, 1));
 		spr.setRotation(0);
 		spr.setPosition(xx + (width / 2), ceil(yy) + height);
 		window.draw(spr);

@@ -18,6 +18,7 @@ class Player : public Object
 		// Accessors
 		double getAngle() const;
 		int getFrame() const;
+		int getScale() const;
 
 		// Actions
 		void move(int dir, sf::Vector2i m);
@@ -27,7 +28,7 @@ class Player : public Object
 		void updateAnimation(sf::Time deltaTime);
 		virtual void loopAroundMap() override;
 		virtual void draw(sf::RenderWindow &window) override;
-		virtual void drawOther(sf::RenderWindow &window, double x, double y, double angle, int frame);
+		virtual void drawOther(sf::RenderWindow &window, double x, double y, double angle, int frame, int scale);
 		virtual void update(sf::Time deltaTime) override;
 		virtual void onDeath() override;
 };

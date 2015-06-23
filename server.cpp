@@ -40,6 +40,7 @@ void Server::update()
 			p.x = -128;
 			p.y = -128;
 			p.angle = 0;
+			p.frame = 0;
 			p.ip = ip;
 
 			clients.push_back(p);
@@ -57,17 +58,31 @@ void Server::update()
 	{
 		std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
 
+		sf::Uint8 id;
 		network_player p;
+		int c = -1;
 		p.ip = sender;
-
-		if (packet >> p.x >> p.y >> p.angle >> p.frame) std::cout << "X: " << p.x << " | Y: " << p.y << " | Angle: " << p.angle << std::endl;
 
 		for (unsigned int i = 0; i < clients.size(); i++)
 		{
 			if (clients.at(i).ip == sender)
 			{
-				clients[i] = p;
+				c = i;
 				break;
+			}
+		}
+
+		if (packet >> id)
+		{
+			switch (id)
+			{
+				case 0:
+					packet >> p.x >> p.y >> p.angle >> p.frame;
+
+					std::cout << "X: " << p.x << " | Y: " << p.y << " | Angle: " << p.angle << std::endl;
+
+					clients[c] = p;
+					break;
 			}
 		}
 	}
