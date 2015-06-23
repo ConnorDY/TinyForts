@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <iostream>
 
-Client::Client() : connected(false), selfId(-1)
+Client::Client() : connected(false), selfId(-3)
 {
 	tcpSocket.setBlocking(false);
 	udpSocket.setBlocking(false);
@@ -66,7 +66,7 @@ void Client::update(network_player p)
 
 				if (packet >> id)
 				{
-					bool pExists = true;
+					bool pExists = false;
 					int c = -1;
 
 					if (id == 0)
@@ -77,12 +77,11 @@ void Client::update(network_player p)
 						{
 							if (players.at(i).id == p.id)
 							{
+								pExists = true;
 								c = i;
 								break;
 							}
 						}
-
-						if (c < 0) pExists = false;
 					}
 
 					switch (id)
