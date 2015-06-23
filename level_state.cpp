@@ -162,14 +162,9 @@ void Level_State::drawBackground(sf::RenderWindow &window)
 {
 	window.draw(bg);
 
-	int selfId = -1;
-	Client *client = getStateManager().getClient();
-	if (client != nullptr) selfId = client->getSelfId();
-
 	for (unsigned int i = 0; i < otherPlayers.size(); i++)
 	{
 		network_player p = otherPlayers.at(i);
-		if (p.id == selfId) continue;
 
 		p.x += p.dx;
 		p.y += p.dy;
@@ -220,9 +215,22 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 		if (inputHandler.checkInput(InputHandler::Input::PressL, event))
 		{
 			network_bullet b = player->shoot();
+			object_id id_b;
+			id_b.id = b._id.id;
 
-			if (server != nullptr) server->sendBullet(b);
-			if (client != nullptr) client->sendBullet(b);
+			if (server != nullptr)
+			{
+				id_b.owner = 0;
+				b.ptr->setId(id_b);
+				server->sendBullet(b);
+			}
+
+			if (client != nullptr)
+			{
+				id_b.owner = client->getSelfId();
+				b.ptr->setId(id_b);
+				client->sendBullet(b);
+			}
 		}
 	}
 

@@ -9,7 +9,7 @@ Room::Room(StateManager &stm, SoundManager &som, TextureManager const &tm, setti
 	: State(stm),
 	  width(VIEW_WIDTH), height(VIEW_HEIGHT), multiplier(1),
 	  settings(settings), soundManager(som), textureManager(tm),
-	  view_follow(nullptr), objNum(0)
+	  view_follow(nullptr)
 {
 	setView(sf::View(sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT), sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT)));
 }
@@ -43,18 +43,19 @@ double Room::getMultiplier() const
 
 void Room::spawn(Object *obj)
 {
-	obj->setId(objNum);
-	objNum++;
 	spawnQueue.push_back(obj);
 }
 
-void Room::deleteObj(unsigned int n)
+void Room::deleteObj(object_id id_d)
 {
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		Object* obj = objects.at(i);
-		if (obj->getId() == n)
+		object_id id_o = obj->getId();
+
+		if (id_d.owner == id_o.owner && id_d.id == id_o.id)
 		{
+
 			obj->destroyedByServer = true;
 			obj->kill();
 			return;
@@ -164,6 +165,8 @@ void Room::update(sf::RenderWindow&, SoundManager&, InputHandler&)
 
 		if (obj->shouldDelete())
 		{
+			object_id id_d = obj->getId();
+
 			// Send deletion to server
 			if (!obj->destroyedByServer)
 			{
@@ -171,8 +174,8 @@ void Room::update(sf::RenderWindow&, SoundManager&, InputHandler&)
 				Server *server = sM.getServer();
 				Client *client = sM.getClient();
 
-				if (server != nullptr) server->sendDelete(obj->getId());
-				if (client != nullptr) client->sendDelete(obj->getId());
+				if (server != nullptr) server->sendDelete(id_d);
+				if (client != nullptr) client->sendDelete(id_d);
 			}
 
 			delete obj;

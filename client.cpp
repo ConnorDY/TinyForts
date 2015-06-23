@@ -36,15 +36,15 @@ void Client::sendBullet(network_bullet b)
 {
 	// Send bullet to server
 	sf::Packet packetSend;
-	packetSend << sf::Uint8(2) << b.x << b.y << b.angle << b.speed;
+	packetSend << sf::Uint8(2) << selfId << b._id.id << b.x << b.y << b.angle << b.speed;
 	sendToServer(packetSend);
 }
 
-void Client::sendDelete(unsigned int n)
+void Client::sendDelete(object_id id_d)
 {
-	// Send bullet to server
+	// Send delete to server
 	sf::Packet packetSend;
-	packetSend << sf::Uint8(3) << n;
+	packetSend << sf::Uint8(3) << selfId << id_d.id;
 	sendToServer(packetSend);
 }
 
@@ -102,9 +102,10 @@ void Client::update(Room &room, network_player p)
 					bool pExists = false;
 					int c = -1;
 
-					if (id == 0)
+					if (id == 0 || id == 2 || id == 3)
 					{
 						packetReceive >> p.id;
+						if (p.id == selfId) return;
 
 						for (unsigned int i = 0; i < players.size(); i++)
 						{
@@ -135,15 +136,20 @@ void Client::update(Room &room, network_player p)
 						// Bullet fired
 						case 2:
 							network_bullet b;
-							packetReceive >> b.x >> b.y >> b.angle >> b.speed;
-							room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
+							packetReceive >> b._id.owner >> b._id.id >> b.x >> b.y >> b.angle >> b.speed;
+
+							Bullet *bul;
+							bul = new Bullet(room, b.x, b.y, b.speed, b.angle);
+							bul->setId(b._id);
+
+							room.spawn(bul);
 							break;
 
 						// Delete object
 						case 3:
-							unsigned int n;
-							packetReceive >> n;
-							room.deleteObj(n);
+							object_id id_d;
+							packetReceive >> id_d.owner >> id_d.id;
+							room.deleteObj(id_d);
 							break;
 					}
 				}

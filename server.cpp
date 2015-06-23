@@ -33,19 +33,28 @@ void Server::sendToAll(sf::Packet packetSend)
 	}
 }
 
+void Server::sendToAll(sf::Packet packetSend, unsigned int e)
+{
+	for (unsigned int i = 0; i < clients.size(); i++)
+	{
+		if (i == e) continue;
+		else if (socket.send(packetSend, clients.at(i).ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+	}
+}
+
 void Server::sendBullet(network_bullet b)
 {
 	// Send bullet to all other clients
 	sf::Packet packetSend;
-	packetSend << sf::Uint8(2) << b.x << b.y << b.angle << b.speed;
+	packetSend << sf::Uint8(2) << b._id.owner << b._id.id << b.x << b.y << b.angle << b.speed;
 	sendToAll(packetSend);
 }
 
-void Server::sendDelete(unsigned int n)
+void Server::sendDelete(object_id id_d)
 {
 	// Send delete object request to all other clients
 	sf::Packet packetSend;
-	packetSend << sf::Uint8(3) << n;
+	packetSend << sf::Uint8(3) << id_d.owner << id_d.id;
 	sendToAll(packetSend);
 }
 
@@ -101,7 +110,7 @@ void Server::update(Room &room, network_player playerHost)
 			sf::Packet packetSend;
 			network_player playerClient = clients.at(i);
 			packetSend << sf::Uint8(0) << playerClient.id << playerClient.x << playerClient.y << playerClient.dx << playerClient.dy << playerClient.angle << playerClient.frame << playerClient.scale;
-			sendToAll(packetSend);
+			sendToAll(packetSend, i);
 		}
 
 		sendTimer.restart();
@@ -143,17 +152,22 @@ void Server::update(Room &room, network_player playerHost)
 					// Bullet fired
 					case 2:
 						network_bullet b;
-						packetReceive >> b.x >> b.y >> b.angle >> b.speed;
-						room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
+						packetReceive >> b._id.owner >> b._id.id >> b.x >> b.y >> b.angle >> b.speed;
+
+						Bullet *bul;
+						bul = new Bullet(room, b.x, b.y, b.speed, b.angle);
+						bul->setId(b._id);
+
+						room.spawn(bul);
 						sendBullet(b);
 						break;
 
 					// Delete object
 					case 3:
-						unsigned int n;
-						packetReceive >> n;
-						room.deleteObj(n);
-						sendDelete(n);
+						object_id id_r;
+						packetReceive >> id_r.owner >> id_r.id;
+						room.deleteObj(id_r);
+						sendDelete(id_r);
 						break;
 				}
 			}

@@ -5,6 +5,7 @@
 
 #include "network_player.h"
 #include "network_bullet.h"
+#include "object_id.h"
 
 class Room;
 
@@ -27,7 +28,7 @@ class Client
 		// Actions
 		void sendToServer(sf::Packet packetSend);
 		void sendBullet(network_bullet b);
-		void sendDelete(unsigned int n);
+		void sendDelete(object_id id_d);
 		void update(Room &room, network_player p);
 };
 

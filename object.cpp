@@ -11,7 +11,7 @@ Object::Object(Room &room, double x, double y, double width, double height, doub
 	  depth(0),
 	  solid(solid),
 	  del(false),
-	  id(0), destroyedByServer(false)
+	  destroyedByServer(false)
 {
 }
 
@@ -21,7 +21,7 @@ Object::~Object()
 }
 
 /* Accessors */
-unsigned int Object::getId() const { return id; }
+object_id Object::getId() const { return _id; }
 int Object::getDepth() const { return depth; }
 bool Object::isSolid() const { return solid; }
 bool Object::shouldDelete() const { return del; }
@@ -72,9 +72,9 @@ bool Object::canLoopAround() const
 
 
 /* Mutators*/
-void Object::setId(unsigned int n)
+void Object::setId(object_id id_n)
 {
-	id = n;
+	_id = id_n;
 }
 
 void Object::setX(double xx)

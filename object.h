@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "object_id.h"
 class Room;
 
 class Object
@@ -21,7 +22,7 @@ class Object
 		virtual ~Object();
 
 		// Accessors
-		unsigned int getId() const;
+		object_id getId() const;
 		int getDepth() const;
 		bool isSolid() const;
 		bool shouldDelete() const;
@@ -35,7 +36,7 @@ class Object
 		std::vector<Object*> allCollisions(double xx, double yy) const;
 
 		// Mutators
-		void setId(unsigned int n);
+		void setId(object_id id_n);
 		void setX(double xx);
 		void setY(double yy);
 		void setDepth(int depth);
@@ -58,8 +59,8 @@ class Object
 		sf::Sprite sprite;
 		double x, y, width, height, dx, dy, gravity, maxFallSpeed;
 		int depth;
-		unsigned int id;
 		bool solid, del;
+		object_id _id;
 };
 
 #endif

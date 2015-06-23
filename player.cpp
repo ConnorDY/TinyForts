@@ -41,7 +41,7 @@ Player::Player(Room &room, double x, double y)
 			0.0014, 0.4
 	  ),
 	animation(&ANIM.STILL), frame(0), scale(1), angle(0),
-	moveSpeed(0.17), jumpSpeed(0.51)
+	moveSpeed(0.17), jumpSpeed(0.51), numBullets(0)
 {
 	spr.setTexture(room.textureManager.getRef("player"));
 	spr.setColor(sf::Color(255, 0, 0));
@@ -87,7 +87,7 @@ void Player::jump()
 	if (dy == 0) dy = -jumpSpeed;
 }
 
-network_bullet Player::shoot() const
+network_bullet Player::shoot()
 {
 	network_bullet b;
 	b.x = x + (scale * ARM_X);
@@ -95,7 +95,14 @@ network_bullet Player::shoot() const
 	b.speed = .3;
 	b.angle = angle + 180.0;
 
-	room.spawn(new Bullet(room, b.x, b.y, b.speed, b.angle));
+	Bullet *bul = new Bullet(room, b.x, b.y, b.speed, b.angle);
+
+	b.ptr = bul;
+	b._id.id = numBullets;
+
+	numBullets++;
+
+	room.spawn(bul);
 
 	return b;
 }

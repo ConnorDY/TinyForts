@@ -5,6 +5,7 @@ class Object;
 class Server;
 class Client;
 #include "state.h"
+#include "object_id.h"
 
 class Room : public State
 {
@@ -19,7 +20,6 @@ class Room : public State
 		std::vector<Object*> spawnQueue;            // Queue of objects to be spawned next tick
 		settings_t &settings;
 		double multiplier;
-		unsigned int objNum;
 
 	public:
 		SoundManager &soundManager;                 // Sound manager for use by objects in this room
@@ -35,7 +35,7 @@ class Room : public State
 		double getMultiplier() const;
 
 		void spawn(Object *obj);
-		void deleteObj(unsigned int n);
+		void deleteObj(object_id id_d);
 		void setMultiplier(double m);
 
 		virtual void start();
