@@ -53,7 +53,7 @@ void Client::update(network_player p)
 		sf::IpAddress sender;
 		unsigned short port;
 
-		for (unsigned int k = 0; k < 6; k++)
+		for (unsigned int k = 0; k < 60; k++)
 		{
 			if (udpSocket.receive(packet, sender, port) == sf::Socket::Done)
 			{

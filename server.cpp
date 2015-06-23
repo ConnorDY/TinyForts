@@ -86,7 +86,7 @@ void Server::update(network_player p)
 	sf::IpAddress sender;
 	unsigned short port;
 
-	for (int k = 0; k < 6; k++)
+	for (int k = 0; k < 60; k++)
 	{
 		if (socket.receive(packet, sender, port) == sf::Socket::Done)
 		{
