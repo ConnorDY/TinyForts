@@ -53,12 +53,12 @@ void Client::update(network_player p)
 		sf::IpAddress sender;
 		unsigned short port;
 
-		for (unsigned int k = 0; k < 5; k++)
+		for (unsigned int k = 0; k < 10; k++)
 		{
 			if (udpSocket.receive(packet, sender, port) == sf::Socket::Done)
 			{
 				#ifdef DEBUG_MODE
-				//std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+				std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
 				#endif
 
 				sf::Uint8 id;
