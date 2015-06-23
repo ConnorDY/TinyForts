@@ -120,14 +120,19 @@ void Server::update(Room &room, network_player playerHost)
 			int cId = -1;
 			playerReceive.ip = sender;
 
-			if (packetReceive >> id >> cId)
+			if (packetReceive >> id)
 			{
 				switch (id)
 				{
 					// Player Position
 					case 0:
-						packetReceive >> playerReceive.x >> playerReceive.y >> playerReceive.dx >> playerReceive.dy >> playerReceive.angle >> playerReceive.frame >> playerReceive.scale;
+						packetReceive >> cId >> playerReceive.x >> playerReceive.y >> playerReceive.dx >> playerReceive.dy >> playerReceive.angle >> playerReceive.frame >> playerReceive.scale;
 						clients[cId - 1] = playerReceive;
+						break;
+
+					// Disconnect
+					case 1:
+						
 						break;
 
 					// Bullet fired
