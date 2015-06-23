@@ -36,7 +36,17 @@ void Server::update()
 			sf::IpAddress ip = client->getRemoteAddress();
 			std::cout << "Client connected: " << ip.toString() << std::endl;
 
+			// Increase client number
+			clientNum++;
+
+			// Send them their ID
+			sf::Packet packet;
+			packet << sf::Uint8(1) << clientNum;
+			if (socket.send(packet, ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send client ID.");
+
+			// Create network_player struct
 			network_player p;
+			p.id = clientNum;
 			p.x = -128;
 			p.y = -128;
 			p.angle = 0;
@@ -44,36 +54,41 @@ void Server::update()
 			p.scale = 1;
 			p.ip = ip;
 
+			// Add to clients vector
 			clients.push_back(p);
-			clientNum++;
 		}
 		else delete client;
 	}
 
 	// Current client connections
 	sf::Packet packet;
+	network_player p;
+
+	// Send
+	for (unsigned int i = 0; i < clients.size(); i++)
+	{
+		p = clients.at(i);
+
+		packet << sf::Uint8(0) << p.id << p.x << p.y << p.angle << p.frame << p.scale;
+
+		if (socket.send(packet, p.ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
+	}
+
+	// Receive
 	sf::IpAddress sender;
 	unsigned short port;
 
 	if (socket.receive(packet, sender, port) == sf::Socket::Done)
 	{
+		#ifdef DEBUG_MODE
 		std::cout << "Received " << packet.getDataSize() << " bytes from " << sender << " on port " << port << std::endl;
+		#endif
 
 		sf::Uint8 id;
-		network_player p;
 		int c = -1;
 		p.ip = sender;
 
-		for (unsigned int i = 0; i < clients.size(); i++)
-		{
-			if (clients.at(i).ip == sender)
-			{
-				c = i;
-				break;
-			}
-		}
-
-		if (packet >> id)
+		if (packet >> id >> c)
 		{
 			switch (id)
 			{

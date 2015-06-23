@@ -9,7 +9,9 @@ class Client
 	private:
 		sf::UdpSocket udpSocket;
 		sf::TcpSocket tcpSocket;
+		std::vector<network_player> players;
 		bool connected;
+		int selfId;
 	public:
 		Client();
 
