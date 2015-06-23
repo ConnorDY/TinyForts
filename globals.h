@@ -15,6 +15,8 @@
 #define TCP_PORT 5060
 #define SERVER "192.168.1.87"
 
+#define TICK_TIME (1000.0 / 60.0) * 2
+
 //#define _DEBUG
 
 #ifdef _DEBUG

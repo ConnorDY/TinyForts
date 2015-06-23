@@ -65,7 +65,7 @@ void Server::update(network_player playerHost)
 	{
 		sf::Time timePassed = sendTimer.getElapsedTime();
 			
-		if (timePassed.asMilliseconds() >= 6.0)
+		if (timePassed.asMilliseconds() >= TICK_TIME)
 		{
 			sf::Packet packetSend;
 

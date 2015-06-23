@@ -47,7 +47,7 @@ void Client::update(network_player p)
 		{
 			sf::Time timePassed = sendTimer.getElapsedTime();
 
-			if (timePassed.asMilliseconds() >= 6.0)
+			if (timePassed.asMilliseconds() >= TICK_TIME)
 			{
 				packetSend << sf::Uint8(0) << selfId << p.x << p.y << p.dx << p.dy << p.angle << p.frame << p.scale;
 				if (udpSocket.send(packetSend, SERVER, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to server.");
