@@ -135,7 +135,7 @@ void Client::update(Room &room, network_player p)
 
 						// Bullet fired
 						case 2:
-							printf("Received bullet creation request.\n");
+							printf("Received bullet creation request (");
 
 							network_bullet b;
 							packetReceive >> b._id.owner >> b._id.id >> b.x >> b.y >> b.angle >> b.speed;
@@ -145,6 +145,9 @@ void Client::update(Room &room, network_player p)
 							bul->setId(b._id);
 
 							room.spawn(bul);
+
+							printf("ID: %d>%d | X: %f | Y: %f | Angle: %f | Speed: %f)", b._id.owner, b._id.id, b.x, b.y, b.angle, b.speed);
+
 							break;
 
 						// Delete object
