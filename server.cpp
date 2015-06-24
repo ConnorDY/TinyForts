@@ -55,7 +55,7 @@ void Server::sendDelete(object_id id_d)
 	// Send delete object request to all other clients
 	sf::Packet packetSend;
 	packetSend << sf::Uint8(3) << id_d.owner << id_d.id;
-	sendToAll(packetSend, id_d.owner);
+	sendToAll(packetSend);
 }
 
 void Server::update(Room &room, network_player playerHost)
