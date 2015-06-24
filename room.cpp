@@ -164,7 +164,8 @@ void Room::update(sf::RenderWindow&, SoundManager&, InputHandler&)
 		Object *obj = *iter;
 
 		if (!obj->shouldDelete()) obj->update(deltaTime);
-		else if (obj->shouldDelete())
+		
+		if (obj->shouldDelete())
 		{
 			// Send deletion to server
 			if (!obj->destroyedByServer)
