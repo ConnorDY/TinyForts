@@ -164,7 +164,8 @@ void Room::update(sf::RenderWindow&, SoundManager&, InputHandler&)
 		Object *obj = *iter;
 
 		if (!obj->shouldDelete()) obj->update(deltaTime);
-		
+
+		// Redo deletion check, because update() can cause it to be deleted
 		if (obj->shouldDelete())
 		{
 			// Send deletion to server
