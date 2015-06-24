@@ -44,7 +44,7 @@ Player::Player(Room &room, double x, double y)
 	moveSpeed(0.17), jumpSpeed(0.51), numBullets(0)
 {
 	spr.setTexture(room.textureManager.getRef("player"));
-	spr.setColor(sf::Color(255, 0, 0));
+	//spr.setColor(sf::Color(255, 0, 0));
 	origin = sf::Vector2f(13, 29);
 
 	setDepth(-1);
@@ -156,7 +156,11 @@ void Player::draw(sf::RenderWindow &window)
 	window.draw(spr);
 
 	// Body
-	spr.setTextureRect((*animation)[(int)frame]);
+	sf::IntRect frameRect = (*animation)[(int)frame];
+
+	frameRect.top += 32;
+
+	spr.setTextureRect(frameRect);
 	spr.setOrigin(origin);
 	spr.setScale(sf::Vector2f(scale, 1));
 	spr.setRotation(0);

@@ -182,7 +182,7 @@ void Level_State::drawForeground(sf::RenderWindow &window)
 {
 	window.draw(fg);
 	window.draw(rect);
-	cursor.setPosition(mouse.x, mouse.y);
+	cursor.setPosition(getViewX() + mouse.x, getViewY() + mouse.y);
 	window.draw(cursor);
 }
 
@@ -235,9 +235,18 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 		}
 	}
 
-	mouse = sf::Mouse::getPosition(window);
+	// Mouse
+	mouse = sf::Mouse::getPosition();
 
-	player->move(moveH, mouse);
+	mouse.x /= 2;
+	mouse.y /= 2;
+
+	// Player movement and arm angle
+	sf::Vector2i mouseP = mouse;
+	mouseP.x += getViewX();
+	mouseP.y += getViewY();
+
+	player->move(moveH, mouseP);
 
 	Room::update(window, soundManager, inputHandler);
 
