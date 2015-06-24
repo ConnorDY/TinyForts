@@ -55,7 +55,7 @@ void Room::deleteObj(object_id id_d)
 
 		if (id_d.owner == id_o.owner && id_d.id == id_o.id)
 		{
-
+			printf("Found object to delete (%d:%d). Deleting...\n", id_d.owner, id_d.id);
 			obj->destroyedByServer = true;
 			obj->kill();
 			return;

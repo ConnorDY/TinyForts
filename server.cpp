@@ -117,7 +117,7 @@ void Server::update(Room &room, network_player playerHost)
 	}
 
 	// Receive
-	for (int k = 0; k < 10; k++)
+	for (int k = 0; k < 30; k++)
 	{
 		sf::Packet packetReceive;
 		network_player playerReceive;
@@ -151,6 +151,7 @@ void Server::update(Room &room, network_player playerHost)
 
 					// Bullet fired
 					case 2:
+						printf("Received bullet creation request.\n");
 						network_bullet b;
 						packetReceive >> b._id.owner >> b._id.id >> b.x >> b.y >> b.angle >> b.speed;
 
@@ -164,6 +165,7 @@ void Server::update(Room &room, network_player playerHost)
 
 					// Delete object
 					case 3:
+						printf("Received object deletion request.\n");
 						object_id id_d;
 						packetReceive >> id_d.owner >> id_d.id;
 						room.deleteObj(id_d);

@@ -84,7 +84,7 @@ void Client::update(Room &room, network_player p)
 		sf::IpAddress sender;
 		unsigned short port;
 
-		for (unsigned int k = 0; k < 10; k++)
+		for (unsigned int k = 0; k < 30; k++)
 		{
 			sf::Packet packetReceive;
 
