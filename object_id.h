@@ -3,7 +3,7 @@
 
 struct object_id
 {
-	unsigned int id;
+	int id;
 	int owner;	
 };
 
