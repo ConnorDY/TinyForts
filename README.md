@@ -1,2 +1,2 @@
 # TinyForts
-A (soon-to-be multiplayer) platforming shooter.
+A multiplayer platforming shooter.
