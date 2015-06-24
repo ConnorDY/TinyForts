@@ -7,11 +7,11 @@
 
 Room::Room(StateManager &stm, SoundManager &som, TextureManager const &tm, settings_t &settings)
 	: State(stm),
-	  width(VIEW_WIDTH), height(VIEW_HEIGHT), multiplier(1),
+	  width(1920), height(628), multiplier(1),
 	  settings(settings), soundManager(som), textureManager(tm),
 	  view_follow(nullptr)
 {
-	setView(sf::View(sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT), sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT)));
+	setView(sf::View(sf::FloatRect(0, 0, settings.videoMode.width / 2, settings.videoMode.height / 2)));
 }
 
 Room::~Room()
@@ -40,6 +40,9 @@ double Room::getMultiplier() const
 {
 	return multiplier;
 }
+
+int Room::getWidth() const { return width; }
+int Room::getHeight() const { return height; }
 
 void Room::spawn(Object *obj)
 {

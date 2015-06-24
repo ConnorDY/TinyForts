@@ -72,6 +72,7 @@ void loadRes(TextureManager &textureManager, SoundManager &soundManager)
 /* Program Entry Point */
 int main()
 {
+
 	// Default settings
 	settings_t settings;
 	settings.vsync_on = true;
@@ -88,9 +89,16 @@ int main()
 	StateManager stateManager(textureManager, soundManager, settings);
 
 	// Create Window
-	sf::RenderWindow window(sf::VideoMode(ROOM_WIDTH, ROOM_HEIGHT), "Matt is a fag.", sf::Style::Close | sf::Style::Titlebar);
+	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+	sf::RenderWindow window(desktop, "Matt is a fag.", sf::Style::Fullscreen);
+
 	window.setVerticalSyncEnabled(VSYNC_ON);
 	window.setMouseCursorVisible(false);
+
+	settings.videoMode = desktop;
+
+	// View
+	window.setView(sf::View(sf::FloatRect(0, 0, settings.videoMode.width / 2, settings.videoMode.height / 2)));
 
 	// Game Loop
 	while (window.isOpen())

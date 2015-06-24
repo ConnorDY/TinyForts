@@ -160,11 +160,11 @@ void Object::loopAroundMap()
 {
 	if (!canLoopAround()) return;
 
-	if (x < -1) x += ROOM_WIDTH;
-	else if (x > ROOM_WIDTH + 1) x -= ROOM_WIDTH;
+	if (x < -1) x += room.getWidth();
+	else if (x > room.getWidth() + 1) x -= room.getWidth();
 
-	if (y < BAR_HEIGHT - 1) y += ROOM_HEIGHT - BAR_HEIGHT;
-	else if (y > ROOM_HEIGHT + 1) y -= (ROOM_HEIGHT - BAR_HEIGHT);
+	if (y < BAR_HEIGHT - 1) y += room.getHeight() - BAR_HEIGHT;
+	else if (y > room.getHeight() + 1) y -= (room.getHeight() - BAR_HEIGHT);
 }
 
 void Object::pushOutOfSolids()

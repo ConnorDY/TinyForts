@@ -16,7 +16,7 @@ class Room : public State
 		std::vector<Object*> objects;               // Objects present in this room
 		Object *view_follow;                        // The object to follow around with the camera
 		sf::Time deltaTime;                         // The time delta between the most recent update() and the previous
-		int const width, height;                    // The width and height of the room
+		int width, height;                    		// The width and height of the room
 		std::vector<Object*> spawnQueue;            // Queue of objects to be spawned next tick
 		settings_t &settings;
 		double multiplier;
@@ -33,6 +33,9 @@ class Room : public State
 		settings_t const& getSettings() const;
 		std::vector<Object*> const getObjects() const;
 		double getMultiplier() const;
+
+		int getWidth() const;
+		int getHeight() const;
 
 		void spawn(Object *obj);
 		void deleteObj(object_id id_d);

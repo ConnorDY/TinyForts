@@ -3,12 +3,6 @@
 
 #define VSYNC_ON true
 
-#define ROOM_WIDTH 832
-#define ROOM_HEIGHT 600
-
-#define VIEW_WIDTH ROOM_WIDTH
-#define VIEW_HEIGHT ROOM_HEIGHT
-
 #define BAR_HEIGHT 88
 
 #define UDP_PORT 5050

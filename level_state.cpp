@@ -22,7 +22,7 @@ Level_State::Level_State(StateManager &sM, SoundManager &som, TextureManager con
 	cursor.setTexture(textureManager.getRef("cursor"));
 	cursor.setOrigin(10, 10);
 
-	rect.setSize(sf::Vector2f(VIEW_WIDTH, BAR_HEIGHT));
+	rect.setSize(sf::Vector2f(getView().getSize().x, BAR_HEIGHT));
 	rect.setFillColor(sf::Color::Black);
 
 	if (settings.host) sM.createServer();
@@ -39,6 +39,8 @@ void Level_State::start()
 {
 	player = new Player(*this, MAP_SPAWN_X, MAP_SPAWN_Y);
 	spawn(player);
+
+	view_follow = player;
 
 	switch (MAP)
 	{

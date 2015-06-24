@@ -131,130 +131,56 @@ void Player::updateAnimation(sf::Time deltaTime)
 
 void Player::loopAroundMap()
 {
-	if (x < -(width / 2)) x += ROOM_WIDTH;
-	else if (x > ROOM_WIDTH - (width / 2)) x -= ROOM_WIDTH;
+	if (x < -(width / 2)) x += room.getWidth();
+	else if (x > room.getWidth() - (width / 2)) x -= room.getWidth();
 
-	if (y < BAR_HEIGHT - (height / 2)) y += ROOM_HEIGHT - BAR_HEIGHT;
-	else if (y > ROOM_HEIGHT - (height / 2)) y -= ROOM_HEIGHT - BAR_HEIGHT;
+	if (y < BAR_HEIGHT - (height / 2)) y += room.getHeight() - BAR_HEIGHT;
+	else if (y > room.getHeight() - (height / 2)) y -= room.getHeight() - BAR_HEIGHT;
 }
 
 void Player::draw(sf::RenderWindow &window)
 {
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		double xx = x, yy = y;
+	#ifdef DEBUG_MODE
+	// Debug
+	sf::RectangleShape r(sf::Vector2f(width, height));
+	r.setPosition(x, y);
+	window.draw(r);
+	#endif
 
-		switch (i)
-		{
-			case 1:
-				xx += VIEW_WIDTH;
-				break;
-			case 2:
-				yy += VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 3:
-				xx += VIEW_WIDTH;
-				yy += VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 4:
-				xx -= VIEW_WIDTH;
-				break;
-			case 5:
-				yy -= VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 6:
-				xx -= VIEW_WIDTH;
-				yy -= VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 7:
-				xx += VIEW_WIDTH;
-				yy -= VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 8:
-				xx -= VIEW_WIDTH;
-				yy += VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-		}
+	//Arm
+	spr.setTextureRect(sf::IntRect(110, 14, 10, 6));
+	spr.setOrigin(0, 3);
+	spr.setScale(1, 1);
+	spr.setRotation(angle + 180);
+	spr.setPosition(x + (width / 2) + (scale * ARM_X), ceil(y) + ARM_Y);
+	window.draw(spr);
 
-		#ifdef DEBUG_MODE
-		// Debug
-		sf::RectangleShape r(sf::Vector2f(width, height));
-		r.setPosition(xx, yy);
-		window.draw(r);
-		#endif
-
-		//Arm
-		spr.setTextureRect(sf::IntRect(110, 14, 10, 6));
-		spr.setOrigin(0, 3);
-		spr.setScale(1, 1);
-		spr.setRotation(angle + 180);
-		spr.setPosition(xx + (width / 2) + (scale * ARM_X), ceil(yy) + ARM_Y);
-		window.draw(spr);
-
-		// Body
-		spr.setTextureRect((*animation)[(int)frame]);
-		spr.setOrigin(origin);
-		spr.setScale(sf::Vector2f(scale, 1));
-		spr.setRotation(0);
-		spr.setPosition(xx + (width / 2), ceil(yy) + height);
-		window.draw(spr);
-	}
+	// Body
+	spr.setTextureRect((*animation)[(int)frame]);
+	spr.setOrigin(origin);
+	spr.setScale(sf::Vector2f(scale, 1));
+	spr.setRotation(0);
+	spr.setPosition(x + (width / 2), ceil(y) + height);
+	window.draw(spr);
 }
 
 void Player::drawOther(sf::RenderWindow &window, double x_, double y_, double angle_, int frame_, int scale_)
 {
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		double xx = x_, yy = y_;
+	//Arm
+	spr.setTextureRect(sf::IntRect(110, 14, 10, 6));
+	spr.setOrigin(0, 3);
+	spr.setScale(1, 1);
+	spr.setRotation(angle_ + 180);
+	spr.setPosition(x_ + (width / 2) + (scale_ * ARM_X), ceil(y_) + ARM_Y);
+	window.draw(spr);
 
-		switch (i)
-		{
-			case 1:
-				xx += VIEW_WIDTH;
-				break;
-			case 2:
-				yy += VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 3:
-				xx += VIEW_WIDTH;
-				yy += VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 4:
-				xx -= VIEW_WIDTH;
-				break;
-			case 5:
-				yy -= VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 6:
-				xx -= VIEW_WIDTH;
-				yy -= VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 7:
-				xx += VIEW_WIDTH;
-				yy -= VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-			case 8:
-				xx -= VIEW_WIDTH;
-				yy += VIEW_HEIGHT - BAR_HEIGHT;
-				break;
-		}
-
-		//Arm
-		spr.setTextureRect(sf::IntRect(110, 14, 10, 6));
-		spr.setOrigin(0, 3);
-		spr.setScale(1, 1);
-		spr.setRotation(angle_ + 180);
-		spr.setPosition(xx + (width / 2) + (scale_ * ARM_X), ceil(yy) + ARM_Y);
-		window.draw(spr);
-
-		// Body
-		spr.setTextureRect(ANIM.WALKING[frame_]);
-		spr.setOrigin(origin);
-		spr.setScale(sf::Vector2f(scale_, 1));
-		spr.setRotation(0);
-		spr.setPosition(xx + (width / 2), ceil(yy) + height);
-		window.draw(spr);
-	}
+	// Body
+	spr.setTextureRect(ANIM.WALKING[frame_]);
+	spr.setOrigin(origin);
+	spr.setScale(sf::Vector2f(scale_, 1));
+	spr.setRotation(0);
+	spr.setPosition(x_ + (width / 2), ceil(y_) + height);
+	window.draw(spr);
 }
 
 void Player::update(sf::Time deltaTime)
