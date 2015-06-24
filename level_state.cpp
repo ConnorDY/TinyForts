@@ -215,22 +215,18 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 		if (inputHandler.checkInput(InputHandler::Input::PressL, event))
 		{
 			network_bullet b = player->shoot();
-			object_id id_b;
-			id_b.id = b._id.id;
 
 			if (server != nullptr)
 			{
-				id_b.owner = 0;
-				b._id = id_b;
-				b.ptr->setId(id_b);
+				b._id.owner = 0;
+				b.ptr->setId(b._id);
 				server->sendBullet(b);
 			}
 
 			if (client != nullptr)
 			{
-				id_b.owner = client->getSelfId();
-				b._id = id_b;
-				b.ptr->setId(id_b);
+				b._id.owner = client->getSelfId();
+				b.ptr->setId(b._id);
 				client->sendBullet(b);
 			}
 		}

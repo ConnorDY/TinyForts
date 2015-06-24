@@ -37,7 +37,7 @@ void Server::sendToAll(sf::Packet packetSend, unsigned int e)
 {
 	for (unsigned int i = 0; i < clients.size(); i++)
 	{
-		if (i == e) continue;
+		if (i == e - 1) continue;
 		else if (socket.send(packetSend, clients.at(i).ip, UDP_PORT) != sf::Socket::Done) printf("Failed to send data to client %d.", i);
 	}
 }

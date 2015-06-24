@@ -78,7 +78,7 @@ void Client::update(Room &room, network_player p)
 				sendTimer.restart();
 			}
 		}
-		else printf("No SelfId received yet.");
+		else printf("No SelfId received yet.\n");
 
 		// Receive
 		sf::IpAddress sender;
@@ -130,7 +130,7 @@ void Client::update(Room &room, network_player p)
 						// Client ID
 						case 1:
 							packetReceive >> selfId;
-							printf("Self ID received: %d", selfId);
+							printf("Self ID received: %d\n", selfId);
 							break;
 
 						// Bullet fired
