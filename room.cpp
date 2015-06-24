@@ -158,18 +158,19 @@ void Room::update(sf::RenderWindow&, SoundManager&, InputHandler&)
 	// Update objects and player
 	auto iter = objects.begin();
 	auto end = objects.end();
+
 	while (iter != end)
 	{
 		Object *obj = *iter;
+
 		if (!obj->shouldDelete()) obj->update(deltaTime);
-
-		if (obj->shouldDelete())
+		else if (obj->shouldDelete())
 		{
-			object_id id_d = obj->getId();
-
 			// Send deletion to server
 			if (!obj->destroyedByServer)
 			{
+				object_id id_d = obj->getId();
+
 				StateManager &sM = getStateManager();
 				Server *server = sM.getServer();
 				Client *client = sM.getClient();
