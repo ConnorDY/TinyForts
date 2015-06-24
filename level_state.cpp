@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "menu_state.h"
 #include "network_player.h"
+#include "network_bullet.h"
 #include "server.h"
 #include "client.h"
 

@@ -102,7 +102,7 @@ void Client::update(Room &room, network_player p)
 					bool pExists = false;
 					int c = -1;
 
-					if (id == 0 || id == 2 || id == 3)
+					if (id == 0)
 					{
 						packetReceive >> p.id;
 						if (p.id == selfId) return;

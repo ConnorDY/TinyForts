@@ -99,6 +99,7 @@ network_bullet Player::shoot()
 
 	b.ptr = bul;
 	b._id.id = numBullets;
+	b._id.owner = -1;
 
 	numBullets++;
 

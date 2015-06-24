@@ -153,10 +153,8 @@ void Server::update(Room &room, network_player playerHost)
 					case 2:
 						printf("Received bullet creation request.\n");
 						network_bullet b;
-						object_id id_b;
-
-						packetReceive >> id_b.owner >> id_b.id >> b.x >> b.y >> b.angle >> b.speed;
-						b._id = id_b;
+						
+						packetReceive >> b._id.owner >> b._id.id >> b.x >> b.y >> b.angle >> b.speed;
 
 						Bullet *bul;
 						bul = new Bullet(room, b.x, b.y, b.speed, b.angle);
