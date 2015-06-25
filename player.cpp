@@ -147,8 +147,16 @@ void Player::draw(sf::RenderWindow &window)
 	window.draw(r);
 	#endif
 
+	// Skin
+	int skin = 48;
+	int col = floor((double)skin / 31);
+
 	//Arm
-	spr.setTextureRect(sf::IntRect(110, 14, 10, 6));
+	sf::IntRect frameRect = sf::IntRect(110, 14, 10, 6);
+	frameRect.top += 32 * (skin % 31);
+	frameRect.left += 128 * col;
+
+	spr.setTextureRect(frameRect);
 	spr.setOrigin(0, 3);
 	spr.setScale(1, 1);
 	spr.setRotation(angle + 180);
@@ -156,9 +164,9 @@ void Player::draw(sf::RenderWindow &window)
 	window.draw(spr);
 
 	// Body
-	sf::IntRect frameRect = (*animation)[(int)frame];
-
-	frameRect.top += 32;
+	frameRect = (*animation)[(int)frame];
+	frameRect.top += 32 * (skin % 31);
+	frameRect.left += 128 * col;
 
 	spr.setTextureRect(frameRect);
 	spr.setOrigin(origin);
