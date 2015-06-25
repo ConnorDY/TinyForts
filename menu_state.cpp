@@ -14,6 +14,9 @@ Menu_State::Menu_State(StateManager &sM, TextureManager const &textureManager, s
 	menuOptions.push_back("Host");
 	menuOptions.push_back("Connect");
 	menuOptions.push_back("Exit");
+
+	// Reset view
+	//window.setView();
 }
 
 Menu_State::~Menu_State()
@@ -25,7 +28,8 @@ Menu_State::~Menu_State()
 /* Actions */
 void Menu_State::draw(sf::RenderWindow &window)
 {
-	float xx = 400.0f, yy = 260.0f;
+	auto v = getView().getSize();
+	float xx = getViewX() + (v.x / 2.0), yy = getViewY() + 260.0f;
 
 	for (unsigned int i = 0; i < menuOptions.size(); i++)
 	{

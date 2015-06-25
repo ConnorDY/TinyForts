@@ -100,7 +100,8 @@ int main()
 	settings.videoMode = desktop;
 
 	// View
-	window.setView(sf::View(sf::FloatRect(0, 0, settings.videoMode.width / 2, settings.videoMode.height / 2)));
+	sf::Vector2f viewSize(settings.videoMode.width / 2, settings.videoMode.height / 2);
+	window.setView(sf::View(sf::Vector2f(viewSize.x / 2, viewSize.y / 2), viewSize));
 
 	// Game Loop
 	while (window.isOpen())
