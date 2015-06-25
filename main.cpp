@@ -90,10 +90,12 @@ int main()
 
 	// Create Window
 	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	sf::RenderWindow window(desktop, "Matt is a fag.", sf::Style::Fullscreen);
+	sf::RenderWindow window(desktop, "Matt is a fag.", sf::Style::None);
 
+	window.setPosition(sf::Vector2i(0, 0));
 	window.setVerticalSyncEnabled(VSYNC_ON);
 	window.setMouseCursorVisible(false);
+	window.setKeyRepeatEnabled(false);
 
 	settings.videoMode = desktop;
 

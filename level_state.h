@@ -13,7 +13,6 @@ class Level_State : public Room
 {
 	protected:
 		sf::Sprite bg, fg, cursor;
-		sf::RectangleShape rect;
 		Player *player;
 		std::vector<network_player> otherPlayers;
 		sf::Vector2i mouse;

@@ -134,8 +134,8 @@ void Player::loopAroundMap()
 	if (x < -(width / 2)) x += room.getWidth();
 	else if (x > room.getWidth() - (width / 2)) x -= room.getWidth();
 
-	if (y < BAR_HEIGHT - (height / 2)) y += room.getHeight() - BAR_HEIGHT;
-	else if (y > room.getHeight() - (height / 2)) y -= room.getHeight() - BAR_HEIGHT;
+	if (y < -(height / 2)) y += room.getHeight();
+	else if (y > room.getHeight() - (height / 2)) y -= room.getHeight();
 }
 
 void Player::draw(sf::RenderWindow &window)

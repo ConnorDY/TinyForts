@@ -163,8 +163,8 @@ void Object::loopAroundMap()
 	if (x < -1) x += room.getWidth();
 	else if (x > room.getWidth() + 1) x -= room.getWidth();
 
-	if (y < BAR_HEIGHT - 1) y += room.getHeight() - BAR_HEIGHT;
-	else if (y > room.getHeight() + 1) y -= (room.getHeight() - BAR_HEIGHT);
+	if (y < -1) y += room.getHeight();
+	else if (y > room.getHeight() + 1) y -= room.getHeight();
 }
 
 void Object::pushOutOfSolids()

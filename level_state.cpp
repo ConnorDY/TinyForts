@@ -22,9 +22,6 @@ Level_State::Level_State(StateManager &sM, SoundManager &som, TextureManager con
 	cursor.setTexture(textureManager.getRef("cursor"));
 	cursor.setOrigin(10, 10);
 
-	rect.setSize(sf::Vector2f(getView().getSize().x, BAR_HEIGHT));
-	rect.setFillColor(sf::Color::Black);
-
 	if (settings.host) sM.createServer();
 	else sM.createClient();
 
@@ -127,30 +124,62 @@ void Level_State::start()
 			break;
 
 		case 4:
-			spawn(new Block(*this, -4, 88, 228, 64));
-			spawn(new Block(*this, 32, 248, 32, 64));
-			spawn(new Block(*this, -4, 216, 68, 32));
-			spawn(new Block(*this, 64, 280, 32, 32));
-			spawn(new Block(*this, -4, 344, 228, 33));
-			spawn(new Block(*this, -4, 384, 36, 64));
-			spawn(new Block(*this, 63, 480, 32, 30));
-			spawn(new Block(*this, -4, 510, 662, 91));
-			spawn(new Block(*this, 126, 376, 34, 64));
-			spawn(new Block(*this, 128, 216, 128, 34));
-			spawn(new Block(*this, 256, 216, 576, 19));
-			spawn(new Block(*this, 606, 88, 230, 64));
-			spawn(new Block(*this, 608, 234, 139, 46));
-			spawn(new Block(*this, 736, 234, 90, 14));
-			spawn(new Block(*this, 608, 344, 198, 32));
-			spawn(new Block(*this, 806, 344, 30, 96));
-			spawn(new Block(*this, 196, 466, 139, 44));
-			spawn(new Block(*this, 334, 492, 151, 19));
-			spawn(new Block(*this, 484, 466, 138, 44));
-			spawn(new Block(*this, 512, 444, 82, 22));
-			spawn(new Block(*this, 544, 414, 32, 30));
-			spawn(new Block(*this, 622, 496, 36, 14));
-			spawn(new Block(*this, 658, 526, 178, 75));
-			spawn(new Block(*this, 770, 511, 66, 15));
+			spawn(new Block(*this, 0, 0, 223, 92));
+			spawn(new Block(*this, 0, 92, 7, 159));
+			spawn(new Block(*this, 8, 157, 56, 96));
+			spawn(new Block(*this, 64, 221, 32, 32));
+			spawn(new Block(*this, 0, 252, 31, 132));
+			spawn(new Block(*this, 32, 285, 224, 32));
+			spawn(new Block(*this, 31, 385, 14, 76));
+			spawn(new Block(*this, 126, 317, 34, 64));
+			spawn(new Block(*this, 127, 156, 128, 34));
+			spawn(new Block(*this, 189, 190, 34, 30));
+			spawn(new Block(*this, 256, 156, 352, 18));
+			spawn(new Block(*this, 46, 451, 150, 8));
+			spawn(new Block(*this, 196, 407, 138, 52));
+			spawn(new Block(*this, 334, 432, 150, 26));
+			spawn(new Block(*this, 483, 407, 138, 52));
+			spawn(new Block(*this, 512, 384, 82, 22));
+			spawn(new Block(*this, 543, 355, 32, 30));
+			spawn(new Block(*this, 621, 436, 36, 30));
+			spawn(new Block(*this, 608, 156, 138, 64));
+			spawn(new Block(*this, 746, 156, 33, 32));
+			spawn(new Block(*this, 747, 284, 26, 8));
+			spawn(new Block(*this, 608, 284, 140, 32));
+			spawn(new Block(*this, 621, 436, 36, 30));
+			spawn(new Block(*this, 658, 465, 233, 29));
+			spawn(new Block(*this, 1609, 90, 7, 68));
+			spawn(new Block(*this, 345, 284, 140, 20));
+			spawn(new Block(*this, 773, 284, 60, 32));
+			spawn(new Block(*this, 805, 316, 74, 64));
+			spawn(new Block(*this, 879, 364, 32, 16));
+			spawn(new Block(*this, 911, 284, 48, 16));
+			spawn(new Block(*this, 959, 284, 150, 32));
+			spawn(new Block(*this, 960, 317, 32, 64));
+			spawn(new Block(*this, 748, 466, 680, 18));
+			spawn(new Block(*this, 894, 412, 138, 54));
+			spawn(new Block(*this, 1043, 397, 199, 7));
+			spawn(new Block(*this, 1032, 445, 222, 21));
+			spawn(new Block(*this, 1168, 283, 165, 20));
+			spawn(new Block(*this, 605, 60, 482, 32));
+			spawn(new Block(*this, 1069, 92, 18, 16));
+			spawn(new Block(*this, 1087, 60, 529, 18));
+			spawn(new Block(*this, 776, 156, 216, 32));
+			spawn(new Block(*this, 1023, 156, 48, 16));
+			spawn(new Block(*this, 959, 188, 33, 48));
+			spawn(new Block(*this, 992, 220, 31, 16));
+			spawn(new Block(*this, 1055, 172, 14, 64));
+			spawn(new Block(*this, 1069, 140, 18, 96));
+			spawn(new Block(*this, 1427, 450, 189, 16));
+			spawn(new Block(*this, 1571, 384, 14, 66));
+			spawn(new Block(*this, 1585, 252, 31, 198));
+			spawn(new Block(*this, 1361, 284, 224, 32));
+			spawn(new Block(*this, 1457, 316, 34, 64));
+			spawn(new Block(*this, 1521, 220, 32, 32));
+			spawn(new Block(*this, 1553, 156, 63, 96));
+			spawn(new Block(*this, 1361, 156, 128, 34));
+			spawn(new Block(*this, 1393, 190, 34, 30));
+			spawn(new Block(*this, 1393, 78, 223, 14));
 			break;
 	}
 
@@ -181,7 +210,6 @@ void Level_State::drawBackground(sf::RenderWindow &window)
 void Level_State::drawForeground(sf::RenderWindow &window)
 {
 	window.draw(fg);
-	window.draw(rect);
 	cursor.setPosition(getViewX() + mouse.x, getViewY() + mouse.y);
 	window.draw(cursor);
 }
