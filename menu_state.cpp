@@ -28,8 +28,10 @@ Menu_State::~Menu_State()
 /* Actions */
 void Menu_State::draw(sf::RenderWindow &window)
 {
-	auto v = getView().getSize();
-	float xx = getViewX() + (v.x / 2.0), yy = getViewY() + 260.0f;
+	sf::Vector2f viewSize(settings.videoMode.width / 2, settings.videoMode.height / 2);
+	window.setView(sf::View(sf::Vector2f(viewSize.x / 2, viewSize.y / 2), viewSize));
+
+	float xx = (viewSize.x / 2.0), yy = 150.0f;
 
 	for (unsigned int i = 0; i < menuOptions.size(); i++)
 	{
