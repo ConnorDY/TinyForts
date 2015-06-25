@@ -41,7 +41,7 @@ Player::Player(Room &room, double x, double y)
 			0.0014, 0.4
 	  ),
 	animation(&ANIM.STILL), frame(0), scale(1), angle(0),
-	moveSpeed(0.17), jumpSpeed(0.51), numBullets(0)
+	moveSpeed(0.17), jumpSpeed(0.51), numBullets(0), clientId(0)
 {
 	spr.setTexture(room.textureManager.getRef("player"));
 	//spr.setColor(sf::Color(255, 0, 0));
@@ -63,6 +63,11 @@ network_player Player::getNetworkPlayer() const
 	p.frame = floor(frame);
 	p.scale = scale;
 	return p;
+}
+
+unsigned int Player::getClientId() const
+{
+	return clientId;
 }
 
 
@@ -94,18 +99,22 @@ network_bullet Player::shoot()
 	b.y = y + ARM_Y;
 	b.speed = .3;
 	b.angle = angle + 180.0;
+	b._id.id = numBullets;
+	b._id.owner = clientId;
 
 	Bullet *bul = new Bullet(room, b.x, b.y, b.speed, b.angle);
-
-	b.ptr = bul;
-	b._id.id = numBullets;
-	b._id.owner = -1;
+	bul->setId(b._id);
 
 	numBullets++;
 
 	room.spawn(bul);
 
 	return b;
+}
+
+void Player::setClientId(unsigned int i)
+{
+	clientId = i;
 }
 
 void Player::setAnimation(std::vector<sf::IntRect> const &newAnim)

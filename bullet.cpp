@@ -26,7 +26,7 @@ Bullet::Bullet(Room &room, double x, double y, double s, double a)
 
 void Bullet::draw(sf::RenderWindow &window)
 {
-	if (timer.getElapsedTime().asMilliseconds() < 60) return;
+	if (timer.getElapsedTime().asMilliseconds() < 30) return;
 
 	spr.setPosition(x, y);
 	window.draw(spr);
@@ -54,13 +54,11 @@ void Bullet::update(sf::Time deltaTime)
 
 	loopAroundMap();
 
-	if (timer.getElapsedTime().asMilliseconds() < 75) return;
-
 	std::vector<Object*> col = allCollisions(x, y);
 	for (Object* obj : col)
 	{
 		Player* plyr = dynamic_cast<Player*>(obj);
-		if (plyr != nullptr)
+		if (plyr != nullptr && plyr->getClientId() != _id.owner)
 		{
 			plyr->respawn();
 			kill();

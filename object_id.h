@@ -4,7 +4,7 @@
 struct object_id
 {
 	int id;
-	int owner;	
+	unsigned int owner;	
 };
 
 #endif

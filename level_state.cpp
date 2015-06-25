@@ -247,19 +247,8 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 		{
 			network_bullet b = player->shoot();
 
-			if (server != nullptr)
-			{
-				b._id.owner = 0;
-				b.ptr->setId(b._id);
-				server->sendBullet(b);
-			}
-
-			if (client != nullptr)
-			{
-				b._id.owner = client->getSelfId();
-				b.ptr->setId(b._id);
-				client->sendBullet(b);
-			}
+			if (server != nullptr) server->sendBullet(b);
+			if (client != nullptr) client->sendBullet(b);
 		}
 	}
 
@@ -289,6 +278,8 @@ void Level_State::update(sf::RenderWindow &window, SoundManager &soundManager, I
 
 	if (client != nullptr)
 	{
+		if (player->getClientId() == 0) player->setClientId(client->getSelfId());
+
 		client->update(*this, p);
 		otherPlayers = client->getOtherPlayers();
 	}

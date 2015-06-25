@@ -14,19 +14,21 @@ class Player : public Object
 		double moveSpeed, jumpSpeed, frame, angle;
 		int scale;
 		sf::Vector2f origin;
-		unsigned int numBullets;
+		unsigned int numBullets, clientId;
 
 	public:
 		Player(Room &room, double x, double y);
 
 		// Accessors
 		network_player getNetworkPlayer() const;
+		unsigned int getClientId() const;
 
 		// Actions
 		void respawn();
 		void move(int dir, sf::Vector2i m);
 		void jump();
 		network_bullet shoot();
+		void setClientId(unsigned int i);
 		void setAnimation(std::vector<sf::IntRect> const &newAnim);
 		void updateAnimation(sf::Time deltaTime);
 		virtual void loopAroundMap() override;
