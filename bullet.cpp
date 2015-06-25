@@ -26,13 +26,15 @@ Bullet::Bullet(Room &room, double x, double y, double s, double a)
 
 void Bullet::draw(sf::RenderWindow &window)
 {
+	if (timer.getElapsedTime().asMilliseconds() < 60) return;
+
 	spr.setPosition(x, y);
 	window.draw(spr);
 }
 
 void Bullet::update(sf::Time deltaTime)
 {
-	double mstime = deltaTime.asMicroseconds() / 1000.0f;
+	double mstime = deltaTime.asMilliseconds();
 
 	// Gravity
 	dy += gravity * mstime;
@@ -52,7 +54,7 @@ void Bullet::update(sf::Time deltaTime)
 
 	loopAroundMap();
 
-	if (timer.getElapsedTime().asMilliseconds() < 400) return;
+	if (timer.getElapsedTime().asMilliseconds() < 75) return;
 
 	std::vector<Object*> col = allCollisions(x, y);
 	for (Object* obj : col)

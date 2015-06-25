@@ -8,8 +8,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-#define ARM_X 2
-#define ARM_Y 15
+#define ARM_X 1
+#define ARM_Y 12
 
 namespace
 {
@@ -148,7 +148,7 @@ void Player::draw(sf::RenderWindow &window)
 	#endif
 
 	// Skin
-	int skin = 48;
+	int skin = 67;
 	int col = floor((double)skin / 31);
 
 	//Arm
