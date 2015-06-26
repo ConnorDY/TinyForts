@@ -7,7 +7,7 @@
 
 Room::Room(StateManager &stm, SoundManager &som, TextureManager const &tm, settings_t &settings)
 	: State(stm),
-	  width(1920), height(628), multiplier(1),
+	  width(1920), height(540), multiplier(1),
 	  settings(settings), soundManager(som), textureManager(tm),
 	  view_follow(nullptr)
 {
@@ -116,7 +116,7 @@ void Room::updateView(sf::RenderWindow &window)
 		if (vx < vw / 2.0f) vx = vw / 2.0f;
 		if (vy < vh / 2.0f) vy = vh / 2.0f;
 
-		getView().setCenter(vx, vh / 2.0f);
+		getView().setCenter(vx, vy);
 		window.setView(getView());
 	}
 }
