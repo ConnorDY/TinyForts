@@ -7,8 +7,8 @@ Menu_State::Menu_State(StateManager &sM, TextureManager const &textureManager, s
 	: State(sM), textureManager(textureManager), settings(settings)
 {
 	// Load font
-	if (!fnt.loadFromFile("res/Tewi-normal-11.bdf")) std::cout << "Failed to load font!" << std::endl;
-	const_cast<sf::Texture&>(fnt.getTexture(11)).setSmooth(false);
+	if (!fnt.loadFromFile("res/upheaval.ttf")) std::cout << "Failed to load font!" << std::endl;
+	const_cast<sf::Texture&>(fnt.getTexture(20)).setSmooth(false);
 
 	// Menu Options
 	menuOptions.push_back("Host");
@@ -31,14 +31,14 @@ void Menu_State::draw(sf::RenderWindow &window)
 	sf::Vector2f viewSize(settings.videoMode.width / 2, settings.videoMode.height / 2);
 	window.setView(sf::View(sf::Vector2f(viewSize.x / 2, viewSize.y / 2), viewSize));
 
-	double xx = (viewSize.x / 2.0), yy = (viewSize.y / 2.0) - 16.0;
+	double xx = (viewSize.x / 2.0), yy = (viewSize.y / 2.0) - 32.0;
 
 	for (unsigned int i = 0; i < menuOptions.size(); i++)
 	{
 		// Create text
 		sf::Text text;
 		text.setFont(fnt);
-		text.setCharacterSize(11);
+		text.setCharacterSize(20);
 		text.setString(menuOptions.at(i));
 
 		// Text colour
@@ -51,7 +51,7 @@ void Menu_State::draw(sf::RenderWindow &window)
 
 		// Set position
 		text.setPosition(sf::Vector2f(round(xx), round(yy)));
-		yy += 16;
+		yy += 32;
 
 		// Draw text
 		window.draw(text);
