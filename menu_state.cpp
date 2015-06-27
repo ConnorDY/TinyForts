@@ -31,7 +31,7 @@ void Menu_State::draw(sf::RenderWindow &window)
 	sf::Vector2f viewSize(settings.videoMode.width / 2, settings.videoMode.height / 2);
 	window.setView(sf::View(sf::Vector2f(viewSize.x / 2, viewSize.y / 2), viewSize));
 
-	float xx = (viewSize.x / 2.0), yy = 150.0f;
+	double xx = (viewSize.x / 2.0), yy = (viewSize.y / 2.0) - 16.0;
 
 	for (unsigned int i = 0; i < menuOptions.size(); i++)
 	{

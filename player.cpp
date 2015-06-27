@@ -166,7 +166,7 @@ void Player::draw(sf::RenderWindow &window)
 	frameRect.left += 128 * col;
 
 	spr.setTextureRect(frameRect);
-	spr.setOrigin(0, 3);
+	spr.setOrigin(1, 3);
 	spr.setScale(1, 1);
 	spr.setRotation(angle + 180);
 	spr.setPosition(x + (width / 2) + (scale * ARM_X), ceil(y) + ARM_Y);
