@@ -4,7 +4,7 @@
 #include "globals.h"
 
 Menu_State::Menu_State(StateManager &sM, TextureManager const &textureManager, settings_t &settings)
-	: State(sM), textureManager(textureManager), settings(settings)
+	: State(sM), textureManager(textureManager), settings(settings), bg(sf::Color(70, 163, 178))
 {
 	// Load font
 	if (!fnt.loadFromFile("res/upheaval.ttf")) std::cout << "Failed to load font!" << std::endl;
@@ -26,12 +26,86 @@ Menu_State::~Menu_State()
 
 
 /* Actions */
+void Menu_State::drawText(sf::RenderWindow &window, double x, double y, unsigned int size, sf::Color colour, unsigned int alignh, unsigned int alignv, std::string str)
+{
+	// Create text
+	sf::Text text;
+	text.setFont(fnt);
+	text.setCharacterSize(20 * size);
+	text.setString(str);
+
+	// Text colour
+	text.setColor(colour);
+
+	// Align text
+	sf::FloatRect textRect = text.getLocalBounds();
+
+	double ox = textRect.left, oy = textRect.top;
+
+	switch (alignh)
+	{
+		case 1:
+			ox += textRect.width / 2.0;
+			break;
+
+		case 2:
+			ox += textRect.width;
+			break;
+	}
+
+	switch (alignv)
+	{
+		case 1:
+			oy += textRect.height / 2.0;
+			break;
+
+		case 2:
+			oy += textRect.height;
+			break;
+	}
+
+	text.setOrigin(round(ox), round(oy));
+
+	// Set position
+	text.setPosition(sf::Vector2f(round(x), round(y)));
+
+	// Draw text
+	window.draw(text);
+}
+
+void Menu_State::drawTab(sf::RenderWindow &window, double x, double y, double width, double height, unsigned int depth)
+{
+	sf::RectangleShape rect(sf::Vector2f(width, height));
+	rect.setFillColor(sf::Color(0, 0, 0, 75 * depth));
+	rect.setPosition(x, y);
+	window.draw(rect);
+}
+
 void Menu_State::draw(sf::RenderWindow &window)
 {
+	// View
 	sf::Vector2f viewSize(settings.videoMode.width / 2, settings.videoMode.height / 2);
 	window.setView(sf::View(sf::Vector2f(viewSize.x / 2, viewSize.y / 2), viewSize));
 
-	double xx = (viewSize.x / 2.0), yy = (viewSize.y / 2.0) - 32.0;
+	// BG
+	sf::RectangleShape rect(sf::Vector2f(viewSize.x, viewSize.y));
+	rect.setFillColor(bg);
+	window.draw(rect);
+
+	// Tabs
+	drawTab(window, 8, 8, 78, 23, 2);
+	drawText(window, 12, 14, 1, sf::Color::White, 0, 0, "Public");
+
+	drawTab(window, 88, 8, 89, 23, 1);
+	drawText(window, 92, 14, 1, sf::Color::White, 0, 0, "Private");
+
+	drawTab(window, 179, 8, 126, 23, 1);
+	drawText(window, 184, 14, 1, sf::Color::White, 0, 0, "Favourites");
+
+	// Current tab
+	drawTab(window, 8, 31, (viewSize.x * .75) - 16, viewSize.y - 39, 2);
+
+	/*double xx = (viewSize.x / 2.0), yy = (viewSize.y / 2.0) - 32.0;
 
 	for (unsigned int i = 0; i < menuOptions.size(); i++)
 	{
@@ -55,7 +129,7 @@ void Menu_State::draw(sf::RenderWindow &window)
 
 		// Draw text
 		window.draw(text);
-	}
+	}*/
 }
 
 void Menu_State::update(sf::RenderWindow &window, SoundManager &soundManager, InputHandler &inputHandler)
