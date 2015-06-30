@@ -10,6 +10,7 @@ Menu_State::Menu_State(StateManager &sM, TextureManager const &textureManager, s
 	// Load font
 	if (!fnt.loadFromFile("res/upheaval.ttf")) std::cout << "Failed to load font!" << std::endl;
 	const_cast<sf::Texture&>(fnt.getTexture(20)).setSmooth(false);
+	const_cast<sf::Texture&>(fnt.getTexture(40)).setSmooth(false);
 
 	cursor.setTexture(textureManager.getRef("cursor"));
 	cursor.setOrigin(10, 10);
@@ -99,9 +100,12 @@ void Menu_State::draw(sf::RenderWindow &window)
 	drawText(window, 184, 14, 1, sf::Color::White, 0, 0, "Favourites");
 
 	// Current tab
-	drawTab(window, 8, 31, (viewSize.x * .75) - 16, viewSize.y - 39, 2);
+	drawTab(window, 8, 31, viewSize.x - 236, viewSize.y - 39, 2);
 
-	drawTab(window, 18, 41, (viewSize.x * .75) - 36, viewSize.y - 59, 1);
+	drawTab(window, 18, 41, viewSize.x - 256, viewSize.y - 89, 1);
+
+	drawTab(window, viewSize.x - 330, viewSize.y - 38, 92, 21, 1);
+	drawText(window, viewSize.x - 243, viewSize.y - 23, 1, sf::Color::White, 2, 2, "Connect");
 
 	// Cursor
 	cursor.setPosition(getViewX() + mouse.x, getViewY() + mouse.y);
