@@ -101,6 +101,8 @@ void Menu_State::draw(sf::RenderWindow &window)
 	// Current tab
 	drawTab(window, 8, 31, (viewSize.x * .75) - 16, viewSize.y - 39, 2);
 
+	drawTab(window, 18, 41, (viewSize.x * .75) - 36, viewSize.y - 59, 1);
+
 	// Cursor
 	cursor.setPosition(getViewX() + mouse.x, getViewY() + mouse.y);
 	window.draw(cursor);
