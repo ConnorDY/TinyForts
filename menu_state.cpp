@@ -4,24 +4,20 @@
 #include "globals.h"
 
 Menu_State::Menu_State(StateManager &sM, TextureManager const &textureManager, settings_t &settings)
-	: State(sM), textureManager(textureManager), settings(settings), bg(sf::Color(70, 163, 178))
+	: State(sM), textureManager(textureManager), settings(settings), bg(sf::Color(70, 163, 178)),
+	currentTab(0)
 {
 	// Load font
 	if (!fnt.loadFromFile("res/upheaval.ttf")) std::cout << "Failed to load font!" << std::endl;
 	const_cast<sf::Texture&>(fnt.getTexture(20)).setSmooth(false);
 
-	// Menu Options
-	menuOptions.push_back("Host");
-	menuOptions.push_back("Connect");
-	menuOptions.push_back("Exit");
-
-	// Reset view
-	//window.setView();
+	cursor.setTexture(textureManager.getRef("cursor"));
+	cursor.setOrigin(10, 10);
 }
 
 Menu_State::~Menu_State()
 {
-	menuOptions.clear();
+	
 }
 
 
@@ -93,43 +89,21 @@ void Menu_State::draw(sf::RenderWindow &window)
 	window.draw(rect);
 
 	// Tabs
-	drawTab(window, 8, 8, 78, 23, 2);
+	drawTab(window, 8, 8, 78, 23, 1 + (currentTab == 0));
 	drawText(window, 12, 14, 1, sf::Color::White, 0, 0, "Public");
 
-	drawTab(window, 88, 8, 89, 23, 1);
+	drawTab(window, 88, 8, 89, 23, 1 + (currentTab == 1));
 	drawText(window, 92, 14, 1, sf::Color::White, 0, 0, "Private");
 
-	drawTab(window, 179, 8, 126, 23, 1);
+	drawTab(window, 179, 8, 126, 23, 1 + (currentTab == 2));
 	drawText(window, 184, 14, 1, sf::Color::White, 0, 0, "Favourites");
 
 	// Current tab
 	drawTab(window, 8, 31, (viewSize.x * .75) - 16, viewSize.y - 39, 2);
 
-	/*double xx = (viewSize.x / 2.0), yy = (viewSize.y / 2.0) - 32.0;
-
-	for (unsigned int i = 0; i < menuOptions.size(); i++)
-	{
-		// Create text
-		sf::Text text;
-		text.setFont(fnt);
-		text.setCharacterSize(20);
-		text.setString(menuOptions.at(i));
-
-		// Text colour
-		if (currentOption == i) text.setColor(sf::Color::Yellow);
-		else text.setColor(sf::Color::White);
-
-		// Center text
-		sf::FloatRect textRect = text.getLocalBounds();
-		text.setOrigin(round(textRect.left + textRect.width / 2.0f), round(textRect.top + textRect.height / 2.0f));
-
-		// Set position
-		text.setPosition(sf::Vector2f(round(xx), round(yy)));
-		yy += 32;
-
-		// Draw text
-		window.draw(text);
-	}*/
+	// Cursor
+	cursor.setPosition(getViewX() + mouse.x, getViewY() + mouse.y);
+	window.draw(cursor);
 }
 
 void Menu_State::update(sf::RenderWindow &window, SoundManager &soundManager, InputHandler &inputHandler)
@@ -158,41 +132,21 @@ void Menu_State::update(sf::RenderWindow &window, SoundManager &soundManager, In
 			return;
 		}
 
-		// Up
-		if (inputHandler.checkInput(InputHandler::Input::Up, event))
+		// Left click
+		if (inputHandler.checkInput(InputHandler::Input::PressL, event))
 		{
-			if (currentOption == 0) currentOption = menuOptions.size() - 1;
-			else currentOption--;
-		}
-
-		// Down
-		if (inputHandler.checkInput(InputHandler::Input::Down, event))
-		{
-			if (currentOption == menuOptions.size() - 1) currentOption = 0;
-			else currentOption++;
-		}
-
-		// Enter
-		if (inputHandler.checkInput(InputHandler::Input::Start, event))
-		{
-			switch (currentOption)
+			if (mouse.y >= 8 && mouse.y < 31)
 			{
-				default:
-					std::exit(0);
-					return;
-
-				// Host
-				case 0:
-					settings.host = true;
-					getStateManager().setState(std::make_unique<Level_State>(getStateManager(), soundManager, textureManager, settings));
-					return;
-
-				// Connect
-				case 1:
-					settings.host = false;
-					getStateManager().setState(std::make_unique<Level_State>(getStateManager(), soundManager, textureManager, settings));
-					return;
+				if (mouse.x >= 8 && mouse.x < 86) currentTab = 0;
+				else if (mouse.x >= 88 && mouse.x < 177) currentTab = 1;
+				else if (mouse.x >= 179 && mouse.x < 305) currentTab = 2;
 			}
 		}
 	}
+
+	// Mouse
+	mouse = sf::Mouse::getPosition();
+
+	mouse.x /= 2;
+	mouse.y /= 2;
 }
