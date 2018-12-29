@@ -5,7 +5,7 @@
 
 #define UDP_PORT 5050
 #define TCP_PORT 5060
-#define SERVER "192.168.1.87"
+#define SERVER "192.168.0.16"
 
 #define TICK_TIME 0//(1000.0 / 60.0)
 
