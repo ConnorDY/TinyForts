@@ -42,7 +42,7 @@ endif
 all: $(OUTPUT)
 
 ifeq ($(STATIC_RESOURCES), true)
-	main.o menu_state.o: static_resource.h
+main.o menu_state.o: static_resource.h
 endif
 
 $(OUTPUT): $(OBJS)
@@ -52,7 +52,7 @@ $(OUTPUT): $(OBJS)
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) -o $@ $< -MMD -MQ $@
 
 $(TOOL_BUILDS): static_resource.h
-static_resource.h: ../tools/make_res res
+static_resource.h: tools/make_res res
 	tools/make_res res
 
 tools/make_res: tools/make_res.o
