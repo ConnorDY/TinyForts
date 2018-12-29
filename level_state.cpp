@@ -14,10 +14,12 @@ Level_State::Level_State(StateManager &sM, SoundManager &som, TextureManager con
 	char buffer[9];
 
 	sprintf(buffer, "map_0%d_bg", MAP);
-	bg.setTexture(textureManager.getRef(buffer));
+	std::string str(buffer);
+	bg.setTexture(textureManager.getRef(str));
 
 	sprintf(buffer, "map_0%d_fg", MAP);
-	fg.setTexture(textureManager.getRef(buffer));
+	str = buffer;
+	fg.setTexture(textureManager.getRef(str));
 
 	cursor.setTexture(textureManager.getRef("cursor"));
 	cursor.setOrigin(10, 10);

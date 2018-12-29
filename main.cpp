@@ -89,15 +89,15 @@ int main()
 	StateManager stateManager(textureManager, soundManager, settings);
 
 	// Create Window
-	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	sf::RenderWindow window(desktop, "Matt is a fag.", sf::Style::None);
+	std::vector<sf::VideoMode> desktopModes = sf::VideoMode::getFullscreenModes();
+	sf::RenderWindow window(desktopModes[0], "Matt is a fag.", sf::Style::None);
 
 	window.setPosition(sf::Vector2i(0, 0));
 	window.setVerticalSyncEnabled(VSYNC_ON);
 	window.setMouseCursorVisible(false);
 	window.setKeyRepeatEnabled(false);
 
-	settings.videoMode = desktop;
+	settings.videoMode = desktopModes[0];
 
 	// View
 	sf::Vector2f viewSize(settings.videoMode.width / 2, settings.videoMode.height / 2);
