@@ -2,6 +2,7 @@
 #define MENU_STATE_H
 
 #include <vector>
+#include <cmath>
 
 #include "globals.h"
 #include "state.h"
